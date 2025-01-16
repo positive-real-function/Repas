@@ -3,7 +3,6 @@
     "pages/home/home",
     "pages/record/index",
     "pages/record/edit/index",
-    "pages/record/modify/index",
     "pages/remind/index",
     "pages/diary/index",
     "pages/diary/edit/index",
