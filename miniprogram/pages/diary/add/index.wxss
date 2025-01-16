@@ -1,3 +1,4 @@
+/* pages/diary/add/index.wxss */
 .edit-container {
   min-height: 100vh;
   background: linear-gradient(180deg, #f0f2f5 0%, #f6f8fa 100%);

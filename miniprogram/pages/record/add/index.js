@@ -1,4 +1,4 @@
-// pages/diary/edit/index.js
+// pages/record/add/index.js
 Page({
 
   /**

@@ -104,7 +104,7 @@ Page({
       }
       
       wx.navigateTo({
-        url: `/pages/diary/edit/index?weather=${this.data.selectedWeather}&openid=${openid}`
+        url: `/pages/diary/add/index?weather=${this.data.selectedWeather}&openid=${openid}`
       });
     }).catch(err => {
       wx.hideLoading();

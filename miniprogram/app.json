@@ -5,6 +5,7 @@
     "pages/record/edit/index",
     "pages/remind/index",
     "pages/diary/index",
+    "pages/diary/add/index",
     "pages/diary/edit/index",
     "pages/anniversary/index",
     "pages/message/index",
