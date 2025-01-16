@@ -1,0 +1,32 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx;
+  background: #f6f6f6;
+}
+
+.developing-image {
+  width: 400rpx;
+  height: 400rpx;
+  margin-bottom: 40rpx;
+}
+
+.developing-text {
+  text-align: center;
+}
+
+.title {
+  display: block;
+  font-size: 36rpx;
+  color: #333;
+  margin-bottom: 20rpx;
+  font-weight: 500;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #999;
+} 

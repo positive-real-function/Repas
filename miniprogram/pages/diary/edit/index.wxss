@@ -69,9 +69,9 @@
 }
 
 .section-title {
-  font-size: 14px;
+  padding: 20rpx;
+  font-size: 28rpx;
   color: #666;
-  margin-bottom: 12px;
 }
 
 .image-list {
@@ -204,8 +204,10 @@
 
 .mood-item,
 .weather-item {
+  font-size: 36rpx;
+  padding: 10rpx;
+  min-width: 60rpx;
   text-align: center;
-  padding: 12px;
   border-radius: 8px;
   transition: all 0.3s ease;
 }
@@ -219,4 +221,23 @@
 .mood-emoji,
 .weather-emoji {
   font-size: 24px;
+}
+
+.weather-list, .mood-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+  padding: 20rpx;
+}
+
+.weather-item.active, .mood-item.active {
+  background: #e6f3ff;
+  border-radius: 8rpx;
+}
+
+/* 添加容器限制 */
+.weather-container, .mood-container {
+  width: 100%;
+  padding: 0 20rpx;
+  box-sizing: border-box;
 }

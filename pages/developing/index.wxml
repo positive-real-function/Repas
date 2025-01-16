@@ -1,0 +1,7 @@
+<view class="container">
+  <image class="developing-image" src="/images/developing.png" mode="aspectFit"></image>
+  <view class="developing-text">
+    <text class="title">正在努力开发中</text>
+    <text class="subtitle">敬请期待~</text>
+  </view>
+</view> 

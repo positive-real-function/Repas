@@ -4,13 +4,12 @@
   background: #f6f6f6;
   display: flex;
   flex-direction: column;
-  padding: 0 8px;
   overflow: hidden;
 }
 
 .tabs {
   display: flex;
-  padding: 8px 0;
+  padding: 8px 16px;
   background: #fff;
   border-bottom: 1px solid #eee;
   justify-content: space-between;
@@ -19,11 +18,12 @@
 
 .tab-wrapper {
   display: flex;
-  gap: 12px;
+  gap: 18px;
 }
 
 .tab-item {
   font-size: 14px;
+  padding: 4px 4px;
   color: #666;
   position: relative;
 }
@@ -45,7 +45,7 @@
 
 .record-list {
   flex: 1;
-  padding: 8px 0;
+  padding: 8px 8px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
