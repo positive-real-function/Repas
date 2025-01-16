@@ -55,3 +55,12 @@
     <text class="plus">+</text>
   </view>
 </view>
+
+<!-- 操作菜单 -->
+<van-action-sheet
+  show="{{ showActionSheet }}"
+  actions="{{ [{name: '编辑', color: '#07c160'}, {name: '删除', color: '#ee0a24'}] }}"
+  cancel-text="取消"
+  bind:close="onCloseActionSheet"
+  bind:select="onActionSelect"
+/>
