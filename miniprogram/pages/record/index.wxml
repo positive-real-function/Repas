@@ -27,7 +27,14 @@
       
       <!-- 当天的餐点记录 -->
       <view class="meal-cards">
-        <view wx:for="{{item.meals}}" wx:key="index" wx:for-item="meal" class="meal-card">
+        <view 
+          wx:for="{{item.meals}}" 
+          wx:key="index" 
+          wx:for-item="meal" 
+          class="meal-card"
+          bindlongpress="showActionSheet"
+          data-meal="{{meal}}"
+        >
           <image 
             class="meal-image" 
             src="{{meal.image}}" 

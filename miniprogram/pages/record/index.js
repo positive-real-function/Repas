@@ -12,7 +12,11 @@ Page({
     avatars: {
       Nora: '/images/headphoto/Nora.jpeg',
       Eile: '/images/headphoto/Elie.jpeg'
-    }
+    },
+    showActionSheet: false,
+    currentMeal: null,
+    currentDateIndex: null,
+    currentMealIndex: null
   },
 
   onLoad() {
@@ -158,6 +162,63 @@ Page({
     wx.previewImage({
       urls: [image],
       current: image
+    });
+  },
+
+  showActionSheet(e) {
+    const meal = e.currentTarget.dataset.meal;
+    wx.showActionSheet({
+      itemList: ['修改', '删除'],
+      success: (res) => {
+        if (res.tapIndex === 0) {
+          // 修改
+          wx.navigateTo({
+            url: `/pages/record/edit/index?id=${meal._id}&imagePath=${meal.image}&user=${meal.user}&avatar=${meal.avatar}&isEdit=true`
+          });
+        } else if (res.tapIndex === 1) {
+          // 删除
+          wx.showModal({
+            title: '确认删除',
+            content: '确定要删除这条记录吗？',
+            success: async (res) => {
+              if (res.confirm) {
+                wx.showLoading({
+                  title: '删除中...'
+                });
+
+                try {
+                  const db = wx.cloud.database();
+                  // 删除数据库记录
+                  await db.collection('meal_records').doc(meal._id).remove();
+                  
+                  // 删除云存储中的图片
+                  if (meal.image) {
+                    await wx.cloud.deleteFile({
+                      fileList: [meal.image]
+                    });
+                  }
+
+                  wx.showToast({
+                    title: '删除成功',
+                    icon: 'success'
+                  });
+
+                  // 重新加载列表
+                  this.loadMealRecords();
+                } catch (err) {
+                  console.error('删除记录失败：', err);
+                  wx.showToast({
+                    title: '删除失败',
+                    icon: 'none'
+                  });
+                } finally {
+                  wx.hideLoading();
+                }
+              }
+            }
+          });
+        }
+      }
     });
   }
 });

@@ -1,0 +1,23 @@
+{
+  "name": "repas",
+  "version": "1.0.0",
+  "description": "这是云开发的快速启动指引，其中演示了如何上手使用云开发的三大基础能力：",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/positive-real-function/repas.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/positive-real-function/repas/issues"
+  },
+  "homepage": "https://github.com/positive-real-function/repas#readme",
+  "dependencies": {
+    "@vant/weapp": "^1.11.7"
+  }
+}

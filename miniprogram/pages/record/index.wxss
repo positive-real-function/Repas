@@ -172,3 +172,7 @@
   text-overflow: ellipsis;
   margin-left: 4px;
 }
+
+.meal-card {
+  position: relative;
+}
