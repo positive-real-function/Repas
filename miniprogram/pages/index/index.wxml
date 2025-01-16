@@ -1,0 +1,34 @@
+<!--pages/index/index.wxml-->
+<view class="container">
+  <!-- 日期显示 -->
+  <view class="date-section">
+    <text class="date">{{currentDate}} {{weekDay}}</text>
+  </view>
+
+  <!-- 在一起的天数卡片 -->
+  <view class="together-card">
+    <view class="avatar-section">
+      <image class="avatar" src="{{avatarLeft}}" mode="aspectFill"></image>
+      <view class="heart">❤</view>
+      <image class="avatar" src="{{avatarRight}}" mode="aspectFill"></image>
+    </view>
+    <view class="together-info">
+      <text class="together-text">我们在一起</text>
+      <text class="together-days">{{togetherDays}}天</text>
+    </view>
+  </view>
+
+  <!-- 功能模块导航 -->
+  <view class="modules-grid">
+    <view 
+      class="module-item" 
+      wx:for="{{modules}}" 
+      wx:key="id"
+      bindtap="onModuleTap"
+      data-id="{{item.id}}"
+    >
+      <image class="module-icon" src="{{item.icon}}" mode="aspectFit"></image>
+      <text class="module-name">{{item.name}}</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,103 @@
+<!--pages/diary/edit/index.wxml-->
+<view class="edit-container">
+  <!-- 顶部信息栏 -->
+  <view class="header-section">
+    <view class="weather-mood">
+      <view class="weather-display" bindtap="showWeatherPicker">
+        <text class="label">天气</text>
+        <text class="value">{{weather}}</text>
+      </view>
+      <view class="mood-display" bindtap="showMoodPicker">
+        <text class="label">心情</text>
+        <text class="value">{{mood}}</text>
+      </view>
+    </view>
+    <view class="date-location">
+      <text class="date">{{currentDate}}</text>
+      <text class="location" wx:if="{{location}}">📍 {{location}}</text>
+    </view>
+  </view>
+
+  <!-- 日记内容 -->
+  <view class="content-section">
+    <textarea 
+      class="content-input" 
+      placeholder="记录生活的点点滴滴..." 
+      value="{{content}}"
+      bindinput="onContentInput"
+      maxlength="1000"
+      auto-height
+    ></textarea>
+  </view>
+
+  <!-- 图片上传区域 -->
+  <view class="image-section">
+    <view class="section-title">添加图片</view>
+    <view class="image-list">
+      <view 
+        class="image-item" 
+        wx:for="{{images}}" 
+        wx:key="*this"
+        bindtap="previewImage"
+        data-url="{{item}}"
+      >
+        <image src="{{item}}" mode="aspectFill"></image>
+        <view 
+          class="delete-btn"
+          bindtap="deleteImage"
+          data-index="{{index}}"
+          catchtap="deleteImage"
+        >×</view>
+      </view>
+      <view 
+        class="add-image"
+        bindtap="chooseImage"
+        wx:if="{{images.length < 9}}"
+      >
+        <text class="add-icon">+</text>
+        <text class="add-text">{{images.length}}/9</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 保存按钮 -->
+  <view class="button-section">
+    <button class="save-button" bindtap="saveDiary">保存</button>
+  </view>
+</view>
+
+<!-- 心情选择弹窗 -->
+<view class="mood-picker {{showMoodPicker ? 'show' : ''}}" bindtap="hideMoodPicker">
+  <view class="mood-picker-content" catchtap="stopPropagation">
+    <view class="picker-title">选择心情</view>
+    <view class="mood-grid">
+      <view 
+        wx:for="{{moods}}" 
+        wx:key="*this"
+        class="mood-item {{mood === item ? 'selected' : ''}}"
+        bindtap="selectMood"
+        data-mood="{{item}}"
+      >
+        <text class="mood-emoji">{{item}}</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 天气选择弹窗 -->
+<view class="weather-picker {{showWeatherPicker ? 'show' : ''}}" bindtap="hideWeatherPicker">
+  <view class="weather-picker-content" catchtap="stopPropagation">
+    <view class="picker-title">选择天气</view>
+    <view class="weather-grid">
+      <view 
+        wx:for="{{weathers}}" 
+        wx:key="*this"
+        class="weather-item {{weather === item ? 'selected' : ''}}"
+        bindtap="selectWeather"
+        data-weather="{{item}}"
+      >
+        <text class="weather-emoji">{{item}}</text>
+      </view>
+    </view>
+  </view>
+</view>

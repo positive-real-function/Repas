@@ -1,0 +1,60 @@
+<view class="diary-container">
+  <!-- 天气选择器 -->
+  <view class="weather-selector">
+    <view class="weather-title">今天天气</view>
+    <view class="weather-list">
+      <view 
+        wx:for="{{weather}}" 
+        wx:key="*this"
+        class="weather-item {{selectedWeather === item ? 'selected' : ''}}"
+        bindtap="selectWeather"
+        data-weather="{{item}}"
+      >{{item}}</view>
+    </view>
+  </view>
+
+  <!-- 日记列表 -->
+  <view class="diary-list">
+    <view 
+      class="diary-item" 
+      wx:for="{{diaryList}}" 
+      wx:key="_id"
+      bindlongpress="showActionSheet"
+      data-diary="{{item}}"
+    >
+      <view class="diary-header">
+        <view class="user-info">
+          <image class="avatar" src="{{item.avatarUrl}}" mode="aspectFill"></image>
+          <view class="user-meta">
+            <text class="username">{{item.userName}}</text>
+            <text class="diary-date">{{item.date}}</text>
+          </view>
+        </view>
+        <text class="diary-weather">{{item.weather}}</text>
+      </view>
+      <view class="diary-content">{{item.content}}</view>
+      <view class="diary-images" wx:if="{{item.images.length > 0}}">
+        <image 
+          wx:for="{{item.images}}" 
+          wx:key="*this" 
+          wx:for-item="image"
+          src="{{image}}" 
+          mode="aspectFill" 
+          class="diary-image"
+          bindtap="previewImage"
+          data-url="{{image}}"
+          data-urls="{{item.images}}"
+        ></image>
+      </view>
+      <view class="diary-footer">
+        <text class="diary-mood">心情：{{item.mood}}</text>
+        <text class="diary-location" wx:if="{{item.location}}">📍 {{item.location}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="add-button" bindtap="addDiary">
+    <text class="plus">+</text>
+  </view>
+</view> 

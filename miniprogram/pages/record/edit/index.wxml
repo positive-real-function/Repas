@@ -1,0 +1,51 @@
+<view class="edit-container">
+  <!-- 预览图片 -->
+  <image class="preview-image" src="{{imagePath}}" mode="aspectFill"></image>
+
+  <!-- 编辑表单 -->
+  <view class="form-container">
+    <!-- 类型选择 -->
+    <view class="form-item">
+      <text class="label">类型</text>
+      <picker 
+        bindchange="onTypeChange" 
+        value="{{mealTypes.indexOf(selectedType)}}" 
+        range="{{mealTypes}}"
+      >
+        <view class="picker">
+          {{selectedType}}
+          <image class="arrow" src="/images/arrow.svg" mode="aspectFit"></image>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 名称输入 -->
+    <view class="form-item">
+      <text class="label">名称</text>
+      <input 
+        class="input" 
+        placeholder="输入餐点名称" 
+        value="{{mealName}}"
+        bindinput="onNameInput"
+      />
+    </view>
+
+    <!-- 价格输入 -->
+    <view class="form-item">
+      <text class="label">价格</text>
+      <view class="price-input">
+        <text class="currency">{{currencySymbol}}</text>
+        <input 
+          class="input" 
+          type="digit" 
+          placeholder="输入价格" 
+          value="{{price}}"
+          bindinput="onPriceInput"
+        />
+      </view>
+    </view>
+  </view>
+
+  <!-- 保存按钮 -->
+  <view class="save-button" bindtap="saveRecord">保存</view>
+</view> 

@@ -1,0 +1,28 @@
+<!--pages/toilet/index.wxml-->
+<view class="container">
+  <!-- 顶部标签页 -->
+  <view class="tabs">
+    <view 
+      wx:for="{{tabs}}" 
+      wx:key="*this"
+      class="tab-item {{currentTab === item ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="{{item}}"
+    >
+      {{item}}
+    </view>
+  </view>
+
+  <!-- 记录列表 -->
+  <scroll-view scroll-y class="record-list">
+    <view wx:for="{{toiletRecords}}" wx:key="_id" class="record-item">
+      <image class="avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+      <text class="time">{{item.createTime}}</text>
+    </view>
+  </scroll-view>
+
+  <!-- 添加按钮 -->
+  <view class="add-button" bindtap="addRecord">
+    <text class="plus">+</text>
+  </view>
+</view>
