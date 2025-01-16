@@ -35,14 +35,14 @@
       {
         "pagePath": "pages/record/index",
         "text": "Record",
-        "iconPath": "images/icons/examples.png",
-        "selectedIconPath": "images/icons/examples-active.png"
+        "iconPath": "images/icons/meal.png",
+        "selectedIconPath": "images/icons/meal-active.png"
       },
       {
         "pagePath": "pages/remind/index",
         "text": "Remind",
-        "iconPath": "images/icons/usercenter.png",
-        "selectedIconPath": "images/icons/usercenter-active.png"
+        "iconPath": "images/icons/remind.png",
+        "selectedIconPath": "images/icons/remind-active.png"
       }
     ]
   },
