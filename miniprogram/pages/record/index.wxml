@@ -20,20 +20,21 @@
   </view>
 
   <!-- 记录列表 -->
-  <scroll-view scroll-y class="record-list">
+  <scroll-view scroll-y class="record-list" style="width: 750rpx; height: 1204rpx; display: block; box-sizing: border-box">
     <view wx:for="{{mealRecords}}" wx:for-index="dateIndex" wx:key="date" class="date-group">
       <!-- 日期 -->
-      <view class="date">{{item.date}}</view>
+      <view class="date" style="width: 725rpx; display: block; box-sizing: border-box">{{item.date}}</view>
       
       <!-- 当天的餐点记录 -->
-      <view class="meal-cards">
+      <view class="meal-cards" style="width: 720rpx; display: flex; box-sizing: border-box; margin: 0 auto;">
         <view 
           wx:for="{{item.meals}}" 
           wx:key="index" 
           wx:for-item="meal" 
-          class="meal-card"
-          bindlongpress="showActionSheet"
+          class="meal-card record-item {{ scaleMealId === meal._id ? 'scale-active' : '' }}"
           data-meal="{{meal}}"
+          bindlongpress="onItemLongPress"
+          bindtouchend="onItemTouchEnd"
         >
           <image 
             class="meal-image" 

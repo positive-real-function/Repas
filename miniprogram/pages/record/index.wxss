@@ -45,17 +45,17 @@
 
 .record-list {
   flex: 1;
-  padding: 8px 8px;
+  padding: 8px 2px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
 .date-group {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .date {
-  padding-left: 4px;
+  padding-left: 2px;
   font-size: 12px;
   color: #666;
   margin-bottom: 6px;
@@ -64,29 +64,39 @@
 .meal-cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 2px;
+  padding: 0;
+  width: 100%;
+  justify-content: flex-start;
 }
 
 .meal-card {
   background: #fff;
-  border-radius: 8px;
+  border-radius: 6px;
   overflow: hidden;
-  width: calc((100% - 8px) / 3);
+  width: 32%;
   position: relative;
   display: flex;
   flex-direction: column;
   aspect-ratio: 1;
+  margin: 0;
+  margin-right: 2px;
+}
+
+.meal-card:nth-child(3n) {
+  margin-right: 0;
 }
 
 .meal-image {
   width: 100%;
-  height: calc(100% - 44px);
+  height: calc(100% - 40px);
   background: #eee;
   object-fit: cover;
+  border-radius: 4px;
 }
 
 .meal-type-bar {
-  height: 20px;
+  height: 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -155,7 +165,7 @@
 }
 
 .meal-info {
-  height: 24px;
+  height: 22px;
   background: #fff;
   display: flex;
   align-items: center;
@@ -175,4 +185,13 @@
 
 .meal-card {
   position: relative;
+}
+
+.record-item {
+  transition: all 0.2s ease;
+  transform-origin: center;
+}
+
+.scale-active {
+  transform: scale(0.95);
 }

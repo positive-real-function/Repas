@@ -16,7 +16,9 @@ Page({
     showActionSheet: false,
     currentMeal: null,
     currentDateIndex: null,
-    currentMealIndex: null
+    currentMealIndex: null,
+    scaleIndex: -1,
+    scaleMealId: null
   },
 
   onLoad() {
@@ -167,6 +169,11 @@ Page({
 
   showActionSheet(e) {
     const meal = e.currentTarget.dataset.meal;
+    // 还原缩放效果
+    this.setData({
+      scaleMealId: null
+    });
+    
     wx.showActionSheet({
       itemList: ['修改', '删除'],
       success: (res) => {
@@ -219,6 +226,24 @@ Page({
           });
         }
       }
+    });
+  },
+
+  onItemLongPress: function(e) {
+    const meal = e.currentTarget.dataset.meal;
+    
+    this.setData({
+      scaleMealId: meal._id
+    });
+
+    setTimeout(() => {
+      this.showActionSheet(e);
+    }, 150);
+  },
+
+  onItemTouchEnd: function() {
+    this.setData({
+      scaleMealId: null
     });
   }
 });

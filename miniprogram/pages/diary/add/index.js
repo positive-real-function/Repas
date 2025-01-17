@@ -185,23 +185,23 @@ Page({
   },
 
   // 获取位置
-  getLocation() {
-    wx.getLocation({
-      type: 'gcj02',
-      success: (res) => {
-        const { latitude, longitude } = res;
-        this.setData({
-          location: `${latitude}, ${longitude}`
-        });
-      },
-      fail: () => {
-        wx.showToast({
-          title: '获取位置失败',
-          icon: 'none'
-        });
-      }
-    });
-  },
+  // getLocation() {
+  //   wx.getLocation({
+  //     type: 'gcj02',
+  //     success: (res) => {
+  //       const { latitude, longitude } = res;
+  //       this.setData({
+  //         location: `${latitude}, ${longitude}`
+  //       });
+  //     },
+  //     fail: () => {
+  //       wx.showToast({
+  //         title: '获取位置失败',
+  //         icon: 'none'
+  //       });
+  //     }
+  //   });
+  // },
 
   // 加载日记详情
   async loadDiaryDetail() {
