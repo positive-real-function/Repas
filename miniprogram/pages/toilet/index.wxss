@@ -1,82 +1,306 @@
 /* pages/toilet/index.wxss */
 .container {
   min-height: 100vh;
-  background: #f6f6f6;
-  display: flex;
-  flex-direction: column;
+  background: #f8f8f8;
+  padding-bottom: 120rpx;
 }
 
-.tabs {
+.tab-container {
   display: flex;
-  padding: 10px 16px;
+  justify-content: center;
+  padding: 20rpx 0;
   background: #fff;
-  border-bottom: 1px solid #eee;
+  margin-bottom: 20rpx;
 }
 
 .tab-item {
-  padding: 6px 12px;
-  color: #666;
-  position: relative;
-  margin-right: 16px;
-}
-
-.tab-item.active {
-  color: #333;
-  font-weight: 500;
-}
-
-.tab-item.active::after {
-  content: '';
-  position: absolute;
-  bottom: -11px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #07C160;
-}
-
-.record-list {
-  flex: 1;
-  padding: 16px;
-}
-
-.record-item {
-  background: #fff;
-  border-radius: 8px;
-  padding: 12px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 12px;
+  padding: 0 40rpx;
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 80rpx;
+  height: 80rpx;
   border-radius: 50%;
-  margin-right: 12px;
+  margin-bottom: 10rpx;
 }
 
-.time {
+.tab-item.active text {
+  color: #333;
+  font-weight: bold;
+}
+
+/* 日历样式 */
+.calendar-box {
+  background: #fff;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+}
+
+.month-text {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.arrow {
+  padding: 10rpx 20rpx;
   color: #666;
-  font-size: 14px;
 }
 
-.add-button {
+.weekday-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  padding: 20rpx 0;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.calendar-body {
+  display: grid;
+  grid-template-rows: repeat(6, auto);
+}
+
+.calendar-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-cell {
+  height: 80rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  position: relative;
+  padding: 6rpx 0;
+}
+
+.calendar-cell.selected {
+  background: #ff8fa3;
+  color: #fff;
+  border-radius: 50%;
+}
+
+.record-dot {
+  width: 8rpx;
+  height: 8rpx;
+  background: #ff8fa3;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 8rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.calendar-cell.other-month .record-dot {
+  background: #ccc;
+}
+
+.calendar-cell.selected .record-dot {
+  background: #fff;
+}
+
+.other-month {
+  color: #ccc;
+}
+
+.has-record {
+  color: #fff;
+  background: #ff8fa3;
+  border-radius: 50%;
+}
+
+/* 统计区域样式 */
+.stats-container {
+  background: #fff;
+  padding: 20rpx;
+}
+
+.stats-row {
+  display: flex;
+  margin-bottom: 20rpx;
+}
+
+.stats-box {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx;
+  background: #f8f8f8;
+  border-radius: 12rpx;
+  margin: 0 10rpx;
+}
+
+.stats-title {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.stats-value {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 色谱统计 */
+.color-stats {
+  margin-bottom: 20rpx;
+}
+
+.color-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
+  padding: 20rpx 0;
+}
+
+.color-item {
+  display: flex;
+  align-items: center;
+  background: #f8f8f8;
+  padding: 10rpx;
+  border-radius: 8rpx;
+}
+
+.poo-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 10rpx;
+}
+
+.color-name {
+  font-size: 24rpx;
+  color: #666;
+  margin-right: auto;
+}
+
+.color-count {
+  font-size: 24rpx;
+  color: #333;
+}
+
+/* 状态评分 */
+.score-box {
+  margin-bottom: 20rpx;
+}
+
+.score-bar {
+  height: 40rpx;
+  background: #f0f0f0;
+  border-radius: 20rpx;
+  overflow: hidden;
+  position: relative;
+}
+
+.score-progress {
+  height: 100%;
+  background: linear-gradient(to right, #ff8fa3, #ff6b84);
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10rpx;
+}
+
+/* 详细记录 */
+.record-list {
+  margin-top: 20rpx;
+}
+
+.empty-tip {
+  text-align: center;
+  color: #999;
+  padding: 40rpx 0;
+  font-size: 28rpx;
+}
+
+.record-item {
+  padding: 30rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.05);
+}
+
+.record-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.record-time {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 16rpx;
+}
+
+.record-duration {
+  font-size: 26rpx;
+  color: #666;
+  background: #f5f5f5;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.record-info {
+  display: flex;
+  gap: 20rpx;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.dot {
+  margin: 0 10rpx;
+  color: #999;
+}
+
+.record-content {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.record-detail {
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 添加按钮 */
+.add-btn {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
-  width: 50px;
-  height: 50px;
-  background: #07C160;
+  right: 40rpx;
+  bottom: 40rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background: #ff8fa3;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(7,193,96,0.3);
+  box-shadow: 0 4rpx 8rpx rgba(0,0,0,0.2);
 }
 
-.plus {
+.add-icon {
   color: #fff;
-  font-size: 30px;
+  font-size: 60rpx;
   font-weight: 300;
+}
+
+/* 修改标签选中状态的颜色 */
+.tag.active {
+  background: #ff8fa3;
+  color: #fff;
 }

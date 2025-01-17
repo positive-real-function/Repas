@@ -4,7 +4,9 @@
     "pages/record/index",
     "pages/record/edit/index",
     "pages/diary/index",
-    "pages/diary/edit/index"
+    "pages/diary/edit/index",
+    "pages/toilet/add/index",
+    "pages/toilet/detail/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

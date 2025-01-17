@@ -10,7 +10,9 @@
     "pages/message/index",
     "pages/sports/index",
     "pages/list/index",
-    "pages/toilet/index"
+    "pages/toilet/index",
+    "pages/toilet/add/index",
+    "pages/toilet/detail/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

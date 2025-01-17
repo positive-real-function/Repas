@@ -1,0 +1,49 @@
+<view class="container">
+  <view class="title">详情记录</view>
+  
+  <view class="form">
+    <view class="form-item">
+      <view class="label">颜色</view>
+      <view class="color-list">
+        <view 
+          wx:for="{{colors}}" 
+          wx:key="name"
+          class="color-item {{selectedColor === item.value ? 'active' : ''}}"
+          bindtap="selectColor"
+          data-color="{{item.value}}"
+        >
+          <image src="/images/toilet/poo_{{item.value}}.png" mode="aspectFit"></image>
+          <text>{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <view class="label">状态</view>
+      <view class="tag-list">
+        <view 
+          wx:for="{{states}}" 
+          wx:key="*this"
+          class="tag {{selectedState === item ? 'active' : ''}}"
+          bindtap="selectState"
+          data-state="{{item}}"
+        >{{item}}</view>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <view class="label">形状</view>
+      <view class="tag-list">
+        <view 
+          wx:for="{{shapes}}" 
+          wx:key="*this"
+          class="tag {{selectedShape === item ? 'active' : ''}}"
+          bindtap="selectShape"
+          data-shape="{{item}}"
+        >{{item}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="submit-btn" bindtap="submitRecord">确定</view>
+</view> 

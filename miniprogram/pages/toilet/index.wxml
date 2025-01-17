@@ -1,7 +1,7 @@
 <!--pages/toilet/index.wxml-->
 <view class="container">
-  <!-- 顶部标签页 -->
-  <view class="tabs">
+  <!-- 顶部切换tab -->
+  <view class="tab-container">
     <view 
       wx:for="{{tabs}}" 
       wx:key="*this"
@@ -9,20 +9,159 @@
       bindtap="switchTab"
       data-tab="{{item}}"
     >
-      {{item}}
+      <image class="avatar" src="{{avatars[item]}}" mode="aspectFill"></image>
+      <text>{{item}}</text>
     </view>
   </view>
 
-  <!-- 记录列表 -->
-  <scroll-view scroll-y class="record-list">
-    <view wx:for="{{toiletRecords}}" wx:key="_id" class="record-item">
-      <image class="avatar" src="{{item.avatar}}" mode="aspectFill"></image>
-      <text class="time">{{item.createTime}}</text>
+  <!-- 日历区域 -->
+  <view class="calendar-box">
+    <view class="calendar-header">
+      <text class="arrow" bindtap="prevMonth">◀</text>
+      <text class="month-text">{{currentYear}}年{{currentMonth}}月</text>
+      <text class="arrow" bindtap="nextMonth">▶</text>
     </view>
-  </scroll-view>
+    <view class="weekday-header">
+      <text wx:for="{{['日','一','二','三','四','五','六']}}" wx:key="*this">{{item}}</text>
+    </view>
+    <view class="calendar-body">
+      <view class="calendar-row" wx:for="{{calendarDays}}" wx:key="index" wx:for-item="row">
+        <view 
+          wx:for="{{row}}" 
+          wx:key="date" 
+          class="calendar-cell {{item.isCurrentMonth ? '' : 'other-month'}} {{item.isSelected ? 'selected' : ''}}"
+          bindtap="selectDate"
+          data-date="{{item.fullDate}}"
+        >
+          <text>{{item.day}}</text>
+          <view wx:if="{{item.hasRecord}}" class="record-dot"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 统计区域 -->
+  <view class="stats-container">
+    <!-- 本周打卡和次数统计 -->
+    <view class="stats-row">
+      <view class="stats-box">
+        <view class="stats-title">本周打卡天数</view>
+        <view class="stats-value">{{weekStats.days}}天</view>
+      </view>
+      <view class="stats-box">
+        <view class="stats-title">本周粑粑次数</view>
+        <view class="stats-value">{{weekStats.times}}次</view>
+      </view>
+    </view>
+
+    <!-- 本周色谱 -->
+    <view class="color-stats">
+      <view class="stats-title">本周色谱</view>
+      <view class="color-list">
+        <view class="color-item" wx:for="{{colorStats}}" wx:key="color">
+          <image class="poo-icon" src="/images/toilet/poo_{{item.color}}.png" mode="aspectFit"></image>
+          <text class="color-name">{{item.name}}</text>
+          <text class="color-count">{{item.count}}次</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 本周状态评分 -->
+    <view class="score-box">
+      <view class="stats-title">本周状态评分</view>
+      <view class="score-bar">
+        <view class="score-progress" style="width: {{weekStats.score}}%;">
+          <image class="poo-icon" src="/images/toilet/poo_score.png" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+
+    <!-- 当日详细记录 -->
+    <view class="record-list">
+      <view class="stats-title">{{selectedDateText}}详细记录</view>
+      <view wx:if="{{dayRecords.length === 0}}" class="empty-tip">
+        暂无记录
+      </view>
+      <view class="record-item" wx:for="{{dayRecords}}" wx:key="_id">
+        <view class="record-time">{{tools.formatHourMinute(item.createTime)}}</view>
+        <view class="record-content">
+          <view class="record-duration">{{tools.formatSeconds(item.duration)}}</view>
+          <view class="record-detail">{{item.color}} · {{item.state}} · {{item.shape}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
 
   <!-- 添加按钮 -->
-  <view class="add-button" bindtap="addRecord">
-    <text class="plus">+</text>
+  <view class="add-btn" bindtap="addRecord">
+    <text class="add-icon">+</text>
   </view>
 </view>
+
+<wxs module="tools">
+  function formatTime(dateStr) {
+    if (!dateStr) return '';
+    var date = getDate(dateStr);
+    if (isNaN(date.getTime())) {
+      console.log('无效的日期:', dateStr);
+      return '';
+    }
+    
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    
+    month = month < 10 ? '0' + month : month;
+    day = day < 10 ? '0' + day : day;
+    hour = hour < 10 ? '0' + hour : hour;
+    minute = minute < 10 ? '0' + minute : minute;
+    
+    return month + '月' + day + '日 ' + hour + ':' + minute;
+  }
+  
+  function formatDuration(duration) {
+    if (!duration) return '0秒';
+    duration = Math.floor(duration / 1000); // 转换为秒
+    if (duration < 60) {
+      return duration + '秒';
+    }
+    var minutes = Math.floor(duration / 60);
+    var seconds = duration % 60;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+    return minutes + '分' + seconds + '秒';
+  }
+  
+  function formatHourMinute(dateStr) {
+    if (!dateStr) return '';
+    var date = getDate(dateStr);
+    if (isNaN(date.getTime())) return '';
+    
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    
+    hour = hour < 10 ? '0' + hour : hour;
+    minute = minute < 10 ? '0' + minute : minute;
+    
+    return hour + ':' + minute;
+  }
+  
+  function formatSeconds(duration) {
+    if (!duration) return '0秒';
+    var seconds = Math.floor(duration / 1000); // 转换为秒
+    if (seconds < 60) {
+      return seconds + '秒';
+    }
+    var minutes = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+    return minutes + '分' + seconds + '秒';
+  }
+  
+  module.exports = {
+    formatTime: formatTime,
+    formatDuration: formatDuration,
+    formatHourMinute: formatHourMinute,
+    formatSeconds: formatSeconds
+  }
+</wxs>

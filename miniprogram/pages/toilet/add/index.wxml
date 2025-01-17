@@ -1,0 +1,28 @@
+<!--pages/toilet/add/index.wxml-->
+<view class="container">
+  <view class="title">{{title}}</view>
+  
+  <!-- 开始前的界面 -->
+  <block wx:if="{{!isStarted}}">
+    <image class="main-image" src="/images/toilet/bear_start.png" mode="aspectFit"></image>
+    <view class="start-btn" bindtap="startToilet">开始</view>
+    <view class="last-record" wx:if="{{lastRecord}}">
+      距离上一次便便2天15小时31分钟
+    </view>
+  </block>
+
+  <!-- 计时界面 -->
+  <block wx:else>
+    <view class="timer">计时:{{timerText}}</view>
+    <image class="main-image" src="/images/toilet/bear_reading.png" mode="aspectFit"></image>
+    
+    <view class="button-group">
+      <view class="finish-btn success" bindtap="finishToilet" data-result="success">
+        拉完了
+      </view>
+      <view class="finish-btn fail" bindtap="finishToilet" data-result="fail">
+        尽力了没拉出来
+      </view>
+    </view>
+  </block>
+</view>

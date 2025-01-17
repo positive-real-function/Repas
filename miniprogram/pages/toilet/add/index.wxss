@@ -1,0 +1,73 @@
+/* pages/toilet/add/index.wxss */
+.container {
+  min-height: 100vh;
+  padding: 40rpx;
+  background: #fffbf0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 60rpx;
+}
+
+.main-image {
+  width: 400rpx;
+  height: 400rpx;
+  margin: 40rpx 0;
+}
+
+.timer {
+  font-size: 40rpx;
+  color: #666;
+  margin: 20rpx 0;
+}
+
+.start-btn {
+  width: 200rpx;
+  height: 80rpx;
+  background: #ff8fa3;
+  color: #fff;
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  margin: 40rpx 0;
+}
+
+.last-record {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 40rpx;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+  margin-top: 60rpx;
+}
+
+.finish-btn {
+  width: 400rpx;
+  height: 88rpx;
+  border-radius: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  color: #fff;
+}
+
+.finish-btn.success {
+  background: #ff8fa3;
+}
+
+.finish-btn.fail {
+  background: #999;
+}
