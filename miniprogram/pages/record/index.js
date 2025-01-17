@@ -6,8 +6,8 @@ Page({
     mealRecords: [],
     currentDate: new Date().getTime(),
     timezones: {
-      Nora: 8,
-      Eile: 1
+      Nora: 'UTC+8',
+      Eile: 'UTC+1'
     },
     avatars: {
       Nora: '/images/headphoto/Nora.jpeg',
@@ -31,6 +31,7 @@ Page({
 
   onShow() {
     this.loadMealRecords();
+    this.setCurrentTime();  // 页面显示时更新时间
   },
 
   // 加载餐点记录
@@ -104,6 +105,7 @@ Page({
       currentTab: tab
     }, () => {
       this.loadMealRecords();
+      this.setCurrentTime();  // 切换标签页后立即更新时间
     });
   },
 
@@ -111,13 +113,26 @@ Page({
   setCurrentTime() {
     const now = new Date();
     const timezone = this.data.timezones[this.data.currentTab];
-    const localTime = new Date(now.getTime() + (timezone * 60 * 60 * 1000));
+    let hours, minutes;
     
-    const hours = localTime.getUTCHours().toString().padStart(2, '0');
-    const minutes = localTime.getUTCMinutes().toString().padStart(2, '0');
+    // 获取UTC时间
+    const utcHours = now.getUTCHours();
+    const utcMinutes = now.getUTCMinutes();
+    
+    // 根据不同时区计算时间
+    if (timezone === 'UTC+8') {  // 北京时间
+      hours = (utcHours + 8) % 24;
+    } else if (timezone === 'UTC+1') {  // 巴黎时间
+      hours = (utcHours + 1) % 24;
+    }
+    
+    if (hours < 0) hours += 24;
+    
+    const hoursStr = hours.toString().padStart(2, '0');
+    const minutesStr = utcMinutes.toString().padStart(2, '0');
     
     this.setData({
-      currentTime: `${hours}:${minutes}`
+      currentTime: `${hoursStr}:${minutesStr}`
     });
   },
 
