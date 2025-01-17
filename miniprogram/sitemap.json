@@ -1,7 +1,7 @@
 {
-  "desc": "关于本文件的更多信息，请参考文档 https://developers.weixin.qq.com/miniprogram/dev/framework/sitemap.html",
+  "desc": "配置小程序页面是否允许微信索引",
   "rules": [{
-    "action": "allow",
+    "action": "disallow",
     "page": "*"
   }]
 }
