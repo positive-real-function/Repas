@@ -1,28 +1,28 @@
 <!--pages/toilet/add/index.wxml-->
 <view class="container">
-  <view class="title">{{title}}</view>
-  
-  <!-- 开始前的界面 -->
-  <block wx:if="{{!isStarted}}">
-    <image class="main-image" src="/images/toilet/bear_start.png" mode="aspectFit"></image>
-    <view class="start-btn" bindtap="startToilet">开始</view>
-    <view class="last-record" wx:if="{{lastRecord}}">
-      距离上一次便便2天15小时31分钟
-    </view>
-  </block>
-
-  <!-- 计时界面 -->
-  <block wx:else>
-    <view class="timer">计时:{{timerText}}</view>
-    <image class="main-image" src="/images/toilet/bear_reading.png" mode="aspectFit"></image>
+  <view class="content">
+    <!-- 标题 -->
+    <view class="title">粑粑简史</view>
     
-    <view class="button-group">
-      <view class="finish-btn success" bindtap="finishToilet" data-result="success">
-        拉完了
+    <!-- 中间的图片，根据状态切换 -->
+    <image 
+      class="poo-image" 
+      src="{{isStarted ? '/images/toilet/poo_bg2.png' : '/images/toilet/poo_bg1.png'}}" 
+      mode="aspectFit"
+    ></image>
+    
+    <!-- 计时器 -->
+    <view class="timer">{{timerText}}</view>
+    
+    <!-- 按钮 -->
+    <block wx:if="{{!isStarted}}">
+      <button class="action-btn start" bindtap="startToilet">开始</button>
+    </block>
+    <block wx:else>
+      <view class="btn-group">
+        <button class="action-btn success" bindtap="finishToilet" data-result="success">完成</button>
+        <button class="action-btn fail" bindtap="finishToilet" data-result="fail">尽力了没拉出来</button>
       </view>
-      <view class="finish-btn fail" bindtap="finishToilet" data-result="fail">
-        尽力了没拉出来
-      </view>
-    </view>
-  </block>
+    </block>
+  </view>
 </view>

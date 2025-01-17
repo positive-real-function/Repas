@@ -8,7 +8,7 @@ Page({
     isStarted: false,
     startTime: null,
     timerText: '00:00:00',
-    title: '把把简史',
+    title: '粑粑简史',
     openid: '',
     user: ''
   },
