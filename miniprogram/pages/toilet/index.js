@@ -43,7 +43,8 @@ Page({
       'green': '绿色',
       'red': '红色',
       'grey': '灰白色'
-    }
+    },
+    allRecords: []
   },
 
   /**
@@ -118,10 +119,9 @@ Page({
     
     try {
       const db = wx.cloud.database();
-      const currentOpenid = this.data.openids[this.data.currentTab];
-      console.log('正在加载用户记录:', this.data.currentTab, 'openid:', currentOpenid);
+      console.log('正在加载所有记录');
       
-      // 获取所有记录
+      // 获取所有记录，不做用户过滤
       const { data } = await db.collection('toilet_records')
         .orderBy('createTime', 'desc')
         .get();
@@ -129,14 +129,15 @@ Page({
       console.log('获取到的所有记录:', data);
       
       // 根据当前选中的用户过滤记录
-      const filteredRecords = data.filter(record => record._openid === currentOpenid);
-      console.log('过滤后的记录:', filteredRecords);
-
+      const currentUserRecords = data.filter(record => record.user === this.data.currentTab);
+      console.log('当前用户的记录:', currentUserRecords);
+      
       // 更新记录列表
       this.setData({ 
-        toiletRecords: filteredRecords
+        toiletRecords: currentUserRecords,  // 只显示当前用户的记录
+        allRecords: data  // 保存所有记录
       }, () => {
-        this.updateWeekStats(filteredRecords);
+        this.updateWeekStats(currentUserRecords);
         this.generateCalendar();
         this.updateDayRecords();
       });
@@ -163,10 +164,17 @@ Page({
       selectedDate: new Date(),
       selectedDateText: '今日'
     }, () => {
-      // 重新加载该用户的记录
-      this.loadToiletRecords();
-      // 重新生成日历
-      this.generateCalendar();
+      // 从所有记录中过滤出当前用户的记录
+      if (this.data.allRecords) {
+        const currentUserRecords = this.data.allRecords.filter(record => record.user === tab);
+        this.setData({
+          toiletRecords: currentUserRecords
+        }, () => {
+          this.updateWeekStats(currentUserRecords);
+          this.generateCalendar();
+          this.updateDayRecords();
+        });
+      }
     });
   },
 
@@ -273,13 +281,11 @@ Page({
       return false;
     }
     
-    const currentOpenid = this.data.openids[this.data.currentTab];
-    
     return this.data.toiletRecords.some(record => {
       try {
         const recordDate = new Date(record.createTime);
         return this.isSameDate(recordDate, date) && 
-               record._openid === currentOpenid;  // 使用openid来判断
+               record.user === this.data.currentTab;  // 使用用户名来判断
       } catch (err) {
         console.error('日期比较错误:', err);
         return false;

@@ -17,19 +17,46 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 40rpx;
+  padding: 10rpx 30rpx;
+  border-radius: 16rpx;
+  transition: all 0.3s ease;
 }
 
-.avatar {
+.tab-item .avatar {
   width: 80rpx;
   height: 80rpx;
   border-radius: 50%;
   margin-bottom: 10rpx;
+  border: 4rpx solid transparent;
+  transition: all 0.3s ease;
+}
+
+.tab-item text {
+  font-size: 28rpx;
+  color: #666;
+  transition: all 0.3s ease;
+}
+
+/* 选中状态样式 */
+.tab-item.active {
+  background: #fff0f3;
+  transform: scale(1.05);
+}
+
+.tab-item.active .avatar {
+  border-color: #ff8fa3;
+  box-shadow: 0 0 10rpx rgba(255, 143, 163, 0.3);
 }
 
 .tab-item.active text {
-  color: #333;
+  color: #ff8fa3;
   font-weight: bold;
+}
+
+/* 点击效果 */
+.tab-item:active {
+  opacity: 0.8;
+  transform: scale(0.95);
 }
 
 /* 日历样式 */
@@ -303,4 +330,16 @@
 .tag.active {
   background: #ff8fa3;
   color: #fff;
+}
+
+/* 用户切换标签样式 */
+.user-tabs {
+  display: flex;
+  justify-content: space-around;
+  padding: 20rpx 0;
+  background: #fff;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
