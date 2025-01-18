@@ -1,5 +1,6 @@
 Page({
   data: {
+    pageLoading: false,
     openids: {
       Elie: 'oup1z5Dv4pTjk0iZKjg3BT63EH7g',
       Nora: 'oup1z5IWvTgiJitepm5-VMK9ysKw'
@@ -26,9 +27,7 @@ Page({
 
   // 加载日记列表
   loadDiaryList() {
-    wx.showLoading({
-      title: '加载中...'
-    });
+    this.setData({ pageLoading: true });
     
     const db = wx.cloud.database();
     db.collection('diaries')
@@ -55,7 +54,7 @@ Page({
         });
       })
       .finally(() => {
-        wx.hideLoading();
+        this.setData({ pageLoading: false });
       });
   },
 
@@ -85,9 +84,7 @@ Page({
   // 添加新日记
   addDiary() {
     console.log('开始调用云函数...');
-    wx.showLoading({
-      title: '加载中...'
-    });
+    this.setData({ pageLoading: true });
     
     wx.cloud.callFunction({
       name: 'getOpenId'
@@ -107,17 +104,13 @@ Page({
         url: `/pages/diary/add/index?weather=${this.data.selectedWeather}&openid=${openid}`
       });
     }).catch(err => {
-      wx.hideLoading();
-      console.error('获取用户ID失败，详细错误：', {
-        error: err,
-        errorMessage: err.message,
-        errorStack: err.stack
-      });
+      console.error('获取用户ID失败：', err);
       wx.showToast({
         title: err.message || '获取用户信息失败',
-        icon: 'none',
-        duration: 2000
+        icon: 'none'
       });
+    }).finally(() => {
+      this.setData({ pageLoading: false });
     });
   },
 
@@ -150,27 +143,27 @@ Page({
       content: '确定要删除这篇日记吗？',
       success: async (res) => {
         if (res.confirm) {
-          wx.showLoading({
-            title: '删除中...'
-          });
-
+          this.setData({ pageLoading: true });
           try {
             const db = wx.cloud.database();
+            // 先删除数据库数据
             await db.collection('diaries').doc(diary._id).remove();
             
-            // 如果有图片，也删除云存储中的图片
+            // 删除相关图片
             if (diary.images && diary.images.length > 0) {
               await wx.cloud.deleteFile({
                 fileList: diary.images
               });
             }
 
+            // 显示成功提示
             wx.showToast({
               title: '删除成功',
               icon: 'success'
             });
 
-            this.loadDiaryList(); // 重新加载列表
+            // 最后才重新加载列表
+            this.loadDiaryList();
           } catch (err) {
             console.error('删除日记失败：', err);
             wx.showToast({
@@ -178,7 +171,7 @@ Page({
               icon: 'none'
             });
           } finally {
-            wx.hideLoading();
+            this.setData({ pageLoading: false });
           }
         }
       }

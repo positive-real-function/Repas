@@ -17,7 +17,8 @@ Page({
     showWeatherPicker: false,
     moods: ['😊', '😄', '😢', '😡', '😴', '🤔'],
     weathers: ['☀️', '🌤', '☁️', '🌧', '🌩', '❄️', '🌈', '⚡️', '🌪', '🌫'],
-    openid: ''
+    openid: '',
+    pageLoading: false
   },
 
   /**
@@ -205,10 +206,7 @@ Page({
 
   // 加载日记详情
   async loadDiaryDetail() {
-    wx.showLoading({
-      title: '加载中...'
-    });
-
+    this.setData({ pageLoading: true });
     try {
       const db = wx.cloud.database();
       const res = await db.collection('diaries').doc(this.data.diaryId).get();
@@ -228,7 +226,7 @@ Page({
         icon: 'none'
       });
     } finally {
-      wx.hideLoading();
+      this.setData({ pageLoading: false });
     }
   },
 
@@ -242,10 +240,7 @@ Page({
       return;
     }
 
-    wx.showLoading({
-      title: '保存中...'
-    });
-
+    this.setData({ pageLoading: true });
     try {
       const db = wx.cloud.database();
       const diaryData = {
@@ -285,7 +280,7 @@ Page({
         icon: 'none'
       });
     } finally {
-      wx.hideLoading();
+      this.setData({ pageLoading: false });
     }
   },
 
