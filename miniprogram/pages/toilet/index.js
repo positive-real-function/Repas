@@ -6,11 +6,11 @@ Page({
    */
   data: {
     currentTab: 'Nora',
-    tabs: ['Nora', 'Eile'],
+    tabs: ['Nora', 'Elie'],
     toiletRecords: [],
     avatars: {
       Nora: '/images/headphoto/Nora.jpeg',
-      Eile: '/images/headphoto/Elie.jpeg'
+      Elie: '/images/headphoto/Elie.jpeg'
     },
     openids: {
       Nora: 'oup1z5IWvTgiJitepm5-VMK9ysKw',

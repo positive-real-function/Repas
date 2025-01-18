@@ -17,21 +17,44 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async onLoad(options) {
-    if (options.user) {
-      // 使用固定的openid映射，而不是获取当前用户的openid
-      const openids = {
-        'Nora': 'oup1z5IWvTgiJitepm5-VMK9ysKw',
-        'Eile': 'oup1z5Dv4pTjk0iZKjg3BT63EH7g'
-      };
-
-      this.setData({
-        user: options.user,
-        openid: openids[options.user]  // 使用对应用户的openid
+    try {
+      // 获取当前用户的openid
+      const { result: { openid } } = await wx.cloud.callFunction({
+        name: 'getOpenId'
       });
 
-      console.log('设置用户数据:', {
-        user: options.user,
-        openid: openids[options.user]
+      // openid到用户名的映射
+      const openidToUser = {
+        'oup1z5IWvTgiJitepm5-VMK9ysKw': 'Nora',
+        'oup1z5Dv4pTjk0iZKjg3BT63EH7g': 'Elie'
+      };
+
+      const currentUser = openidToUser[openid];
+      
+      if (currentUser) {
+        this.setData({
+          user: currentUser,
+          openid: openid
+        });
+
+        console.log('设置用户数据:', {
+          user: currentUser,
+          openid: openid
+        });
+      } else {
+        wx.showToast({
+          title: '未授权的用户',
+          icon: 'none'
+        });
+        setTimeout(() => {
+          wx.navigateBack();
+        }, 2000);
+      }
+    } catch (error) {
+      console.error('获取openid失败:', error);
+      wx.showToast({
+        title: '获取用户信息失败',
+        icon: 'none'
       });
     }
   },
