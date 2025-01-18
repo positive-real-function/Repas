@@ -579,5 +579,47 @@ Page({
     this.setData({
       replyContent: e.detail.value
     });
+  },
+
+  // 点击回复处理
+  onTapReply(e) {
+    const { messageIndex, replyIndex, replyId } = e.currentTarget.dataset;
+    console.log('要删除的回复ID:', replyId);
+    
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除这条回复吗？',
+      success: async (res) => {
+        if (res.confirm) {
+          wx.showLoading({ title: '删除中' });
+          try {
+            // 直接从数据库中删除回复
+            await repliesCollection.doc(replyId).remove();
+            
+            // 先重置页码
+            this.setData({ 
+              page: 1, 
+              reachBottom: false
+            });
+            
+            // 获取新数据
+            await this.getMessageList();
+            
+            wx.showToast({
+              title: '删除成功',
+              icon: 'success'
+            });
+          } catch (err) {
+            console.error('删除回复失败：', err, '回复ID:', replyId);
+            wx.showToast({
+              title: '删除失败',
+              icon: 'none'
+            });
+          } finally {
+            wx.hideLoading();
+          }
+        }
+      }
+    });
   }
 })

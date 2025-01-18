@@ -519,6 +519,13 @@
 
 .reply-item {
   margin-bottom: 16rpx;
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.reply-item:active {
+  background-color: #f5f5f5;
+  border-radius: 8rpx;
 }
 
 .reply-user {

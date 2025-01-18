@@ -54,7 +54,14 @@
           <!-- 回复内容 -->
           <block wx:if="{{item.replies && item.replies.length > 0}}">
             <view class="reply-list">
-              <view class="reply-item" wx:for="{{item.replies}}" wx:key="index" wx:for-item="reply">
+              <view class="reply-item" 
+                    wx:for="{{item.replies}}" 
+                    wx:key="index" 
+                    wx:for-item="reply"
+                    bindtap="onTapReply" 
+                    data-message-index="{{index}}"
+                    data-reply-index="{{index}}"
+                    data-reply-id="{{reply._id}}">
                 <view class="reply-user">
                   <image class="reply-avatar" src="{{reply.avatar}}" mode="aspectFill"></image>
                   <text class="reply-name">{{reply.userName}}</text>
