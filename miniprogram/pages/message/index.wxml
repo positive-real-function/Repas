@@ -113,7 +113,7 @@
                 bindfocus="onReplyFocus"
                 bindblur="onReplyBlur"/>
     </view>
-    <button class="reply-btn" catchtap="publishReply">发布</button>
+    <view class="reply-btn" catchtap="publishReply">发布</view>
   </view>
 
   <!-- 遮罩层 -->

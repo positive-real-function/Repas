@@ -511,10 +511,7 @@ Page({
 
   // 发布回复
   async publishReply(e) {
-    console.log('点击发布按钮'); // 添加调试日志
-    
     const content = this.data.replyContent;
-    console.log('回复内容:', content); // 添加调试日志
     
     if (!content.trim()) {
       wx.showToast({
@@ -526,15 +523,13 @@ Page({
 
     const messageIndex = this.data.currentMessageIndex;
     const message = this.data.messages[messageIndex];
-    
-    console.log('当前留言:', message); // 添加调试日志
 
     wx.showLoading({ title: '发送中' });
     try {
       // 在replies集合中添加新回复
       const result = await repliesCollection.add({
         data: {
-          messageId: message._id,  // 关联的留言ID
+          messageId: message._id,
           content: content.trim(),
           userId: this.data.userInfo.openId,
           userName: this.data.userInfo.userName,
@@ -554,6 +549,9 @@ Page({
         userName: this.data.userInfo.userName,
         avatar: this.data.userInfo.avatar
       });
+
+      // 重置箭头方向
+      messages[messageIndex].showReply = false;
 
       this.setData({
         messages,

@@ -475,14 +475,14 @@
   bottom: 30rpx;
   background: #1a1a1a;
   color: white;
-  padding: 16rpx 40rpx;
-  border-radius: 100rpx;
+  padding: 12rpx 40rpx;
+  border-radius: 32rpx;
   font-size: 28rpx;
   z-index: 1001;
-  margin: 0;
-  min-width: unset;
-  width: auto;
-  line-height: 1.5;
+  display: inline-block;
+  min-width: 0;
+  width: fit-content;
+  line-height: normal;
 }
 
 .reply-btn::after {
