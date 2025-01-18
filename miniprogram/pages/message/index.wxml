@@ -50,7 +50,21 @@
           <view class="user-name">{{item.userName}}</view>
           <view class="message-text">{{item.content}}</view>
           <view class="message-time">{{item.time}}</view>
+          
+          <!-- 回复内容 -->
+          <block wx:if="{{item.replies && item.replies.length > 0}}">
+            <view class="reply-list">
+              <view class="reply-item" wx:for="{{item.replies}}" wx:key="index" wx:for-item="reply">
+                <view class="reply-user">
+                  <image class="reply-avatar" src="{{reply.avatar}}" mode="aspectFill"></image>
+                  <text class="reply-name">{{reply.userName}}</text>
+                </view>
+                <view class="reply-content">{{reply.content}}</view>
+              </view>
+            </view>
+          </block>
         </view>
+        
         <view class="message-arrow" catchtap="toggleReply" data-index="{{index}}">
           <text class="arrow-icon {{item.showReply ? 'up' : ''}}">v</text>
         </view>
@@ -82,7 +96,7 @@
   <!-- 添加遮罩层 -->
   <view class="menu-mask" wx:if="{{showMenu}}" bindtap="hideMenu"></view>
 
-  <!-- 回复面板背景 -->
+  <!-- 回复面板 -->
   <view class="reply-panel {{showReplyPanel ? 'show' : ''}}" style="bottom: {{replyPanelBottom}}px">
     <view class="reply-header">回复留言</view>
     <view class="reply-input-box">
@@ -94,12 +108,14 @@
                 adjust-position="{{false}}"
                 fixed="{{true}}"
                 focus="{{showReplyPanel}}"
+                value="{{replyContent}}"
+                bindinput="onReplyInput"
                 bindfocus="onReplyFocus"
                 bindblur="onReplyBlur"/>
     </view>
-    <view class="reply-btn">发布</view>
+    <button class="reply-btn" catchtap="publishReply">发布</button>
   </view>
 
   <!-- 遮罩层 -->
-  <view class="reply-mask {{showReplyPanel ? 'show' : ''}}" bindtap="closeReply"></view>
+  <view class="reply-mask {{showReplyPanel ? 'show' : ''}}" catchtap="closeReply"></view>
 </view>

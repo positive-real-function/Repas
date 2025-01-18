@@ -1,6 +1,7 @@
 // pages/message/index.js
 const db = wx.cloud.database()
 const messagesCollection = db.collection('messages')
+const repliesCollection = db.collection('replies')  // 添加回复集合
 
 Page({
 
@@ -26,7 +27,9 @@ Page({
     showApologyMenu: false,  // 用于底部悄悄话菜单
     userInfo: null,
     showReplyPanel: false,
-    currentMessageIndex: -1
+    currentMessageIndex: -1,
+    replyContent: '',  // 添加回复内容字段
+    replyPanelBottom: 0
   },
 
   /**
@@ -155,7 +158,7 @@ Page({
           break;
       }
 
-      // 获取数据
+      // 获取留言数据
       const res = await messagesCollection
         .where(query)
         .orderBy('createTime', 'desc')
@@ -163,10 +166,24 @@ Page({
         .limit(this.data.pageSize)
         .get();
 
-      // 格式化时间
-      const messages = res.data.map(msg => ({
-        ...msg,
-        time: this.formatTime(msg.createTime)
+      // 获取每条留言的回复
+      const messages = await Promise.all(res.data.map(async (msg) => {
+        // 获取该留言的所有回复
+        const repliesRes = await repliesCollection
+          .where({
+            messageId: msg._id
+          })
+          .orderBy('createTime', 'asc')
+          .get();
+
+        return {
+          ...msg,
+          time: this.formatTime(msg.createTime),
+          replies: repliesRes.data.map(reply => ({
+            ...reply,
+            time: this.formatTime(reply.createTime)
+          }))
+        };
       }));
 
       this.setData({
@@ -448,13 +465,16 @@ Page({
     const index = e.currentTarget.dataset.index;
     const messages = this.data.messages;
     
+    console.log('切换回复面板, index:', index); // 添加调试日志
+    
     // 更新箭头方向
     messages[index].showReply = !messages[index].showReply;
     
     this.setData({
       messages,
       showReplyPanel: messages[index].showReply,
-      currentMessageIndex: index
+      currentMessageIndex: index,
+      replyContent: '' // 清空回复内容
     });
   },
 
@@ -486,6 +506,80 @@ Page({
     // 立即更新位置，不等待 nextTick
     this.setData({
       replyPanelBottom: 0
+    });
+  },
+
+  // 发布回复
+  async publishReply(e) {
+    console.log('点击发布按钮'); // 添加调试日志
+    
+    const content = this.data.replyContent;
+    console.log('回复内容:', content); // 添加调试日志
+    
+    if (!content.trim()) {
+      wx.showToast({
+        title: '回复内容不能为空',
+        icon: 'none'
+      });
+      return;
+    }
+
+    const messageIndex = this.data.currentMessageIndex;
+    const message = this.data.messages[messageIndex];
+    
+    console.log('当前留言:', message); // 添加调试日志
+
+    wx.showLoading({ title: '发送中' });
+    try {
+      // 在replies集合中添加新回复
+      const result = await repliesCollection.add({
+        data: {
+          messageId: message._id,  // 关联的留言ID
+          content: content.trim(),
+          userId: this.data.userInfo.openId,
+          userName: this.data.userInfo.userName,
+          avatar: this.data.userInfo.avatar,
+          createTime: db.serverDate()
+        }
+      });
+
+      // 更新本地数据
+      const messages = this.data.messages;
+      if (!messages[messageIndex].replies) {
+        messages[messageIndex].replies = [];
+      }
+      messages[messageIndex].replies.push({
+        _id: result._id,
+        content: content.trim(),
+        userName: this.data.userInfo.userName,
+        avatar: this.data.userInfo.avatar
+      });
+
+      this.setData({
+        messages,
+        showReplyPanel: false,
+        replyContent: ''
+      });
+
+      wx.showToast({
+        title: '回复成功',
+        icon: 'success'
+      });
+    } catch (err) {
+      console.error('回复失败：', err);
+      wx.showToast({
+        title: '回复失败',
+        icon: 'none'
+      });
+    } finally {
+      wx.hideLoading();
+    }
+  },
+
+  // 回复输入处理
+  onReplyInput(e) {
+    this.setData({
+      replyContent: e.detail.value
     });
   }
 })
