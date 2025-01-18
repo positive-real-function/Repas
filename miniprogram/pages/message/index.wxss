@@ -469,6 +469,9 @@
 }
 
 .reply-btn {
+  position: absolute;
+  right: 30rpx;
+  bottom: 30rpx;
   background: #1a1a1a;
   color: white;
   padding: 16rpx 40rpx;

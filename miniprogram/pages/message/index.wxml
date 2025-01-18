@@ -96,11 +96,8 @@
                 focus="{{showReplyPanel}}"
                 bindfocus="onReplyFocus"
                 bindblur="onReplyBlur"/>
-      <view class="reply-toolbar">
-        <image class="emoji-btn" src="/images/icons/emoji.png" mode="aspectFit"/>
-        <view class="reply-btn">发布</view>
-      </view>
     </view>
+    <view class="reply-btn">发布</view>
   </view>
 
   <!-- 遮罩层 -->
