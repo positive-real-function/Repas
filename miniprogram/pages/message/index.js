@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    loading: true,  // 添加 loading 状态
     messages: [], // 留言列表
     reachBottom: false, // 是否到底
     page: 1,
@@ -124,7 +125,9 @@ Page({
 
   // 获取留言列表
   async getMessageList() {
-    wx.showLoading({ title: '加载中' });
+    if (this.data.page === 1) {  // 只在第一页时显示 loading
+      this.setData({ loading: true });
+    }
     try {
       // 构建查询条件
       let query = {};
@@ -188,7 +191,8 @@ Page({
 
       this.setData({
         messages: this.data.page === 1 ? messages : [...this.data.messages, ...messages],
-        reachBottom: messages.length < this.data.pageSize
+        reachBottom: messages.length < this.data.pageSize,
+        loading: false  // 数据加载完成
       });
     } catch (err) {
       console.error('获取留言失败：', err);
@@ -196,8 +200,7 @@ Page({
         title: '获取留言失败',
         icon: 'none'
       });
-    } finally {
-      wx.hideLoading();
+      this.setData({ loading: false });
     }
   },
 

@@ -34,8 +34,13 @@
     <view class="tab-item" catchtap="closeMenu">取消</view>
   </view>
 
+  <!-- 加载中状态 -->
+  <view class="loading-state" wx:if="{{loading}}">
+    <view class="loading-icon"></view>
+  </view>
+
   <!-- 留言列表 -->
-  <block wx:if="{{messages.length > 0}}">
+  <block wx:elif="{{messages.length > 0}}">
     <view class="message-list">
       <view class="message-item {{item.userName === 'Elie' ? 'elie-card' : 'nora-card'}}" 
             wx:for="{{messages}}" 
