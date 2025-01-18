@@ -1,0 +1,49 @@
+.write-page {
+  min-height: 100vh;
+  background: #f7f7f7;
+  display: flex;
+  flex-direction: column;
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+
+.message-input {
+  width: 100%;
+  height: 400rpx;
+  padding: 30rpx;
+  box-sizing: border-box;
+  font-size: 32rpx;
+  line-height: 1.6;
+  color: #333;
+  background: white;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+}
+
+.message-input::placeholder {
+  color: #bbb;
+}
+
+.publish-btn {
+  background: #88abda;
+  color: #fff;
+  font-size: 32rpx;
+  padding: 24rpx 0;
+  border-radius: 100rpx;
+  box-shadow: 0 4rpx 12rpx rgba(136, 171, 218, 0.3);
+  text-align: center;
+  width: 100%;
+  margin-bottom: 20rpx;
+}
+
+.publish-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 8rpx rgba(136, 171, 218, 0.2);
+}
+
+.char-count {
+  text-align: right;
+  color: #adc5e6;
+  font-size: 24rpx;
+} 

@@ -1,0 +1,77 @@
+/* pages/message/apology/index.wxss */
+.write-page {
+  min-height: 100vh;
+  background: #f7f7f7;
+  padding: 20rpx;
+  box-sizing: border-box;
+  padding-top: 88rpx;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+}
+
+.left {
+  color: #666;
+  font-size: 32rpx;
+  padding: 20rpx;
+  margin-left: -20rpx;
+}
+
+.right {
+  color: #88abda;
+  font-size: 32rpx;
+  font-weight: 500;
+  padding: 20rpx;
+  margin-right: -20rpx;
+}
+
+.content {
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-top: 20rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  position: relative;
+  min-height: 500rpx;
+}
+
+.message-input {
+  width: 100%;
+  height: 400rpx;
+  font-size: 30rpx;
+  line-height: 1.5;
+  color: #333;
+  padding: 0;
+}
+
+.char-count {
+  position: absolute;
+  right: 30rpx;
+  bottom: 30rpx;
+  color: #adc5e6;
+  font-size: 24rpx;
+}
+
+.send-btn {
+  width: 100%;
+  height: 88rpx;
+  background: #88abda;
+  color: white;
+  font-size: 30rpx;
+  border-radius: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40rpx;
+  box-shadow: 0 4rpx 16rpx rgba(136, 171, 218, 0.4);
+}
+
+.send-btn:active {
+  transform: scale(0.98);
+  background: #7799c8;
+}

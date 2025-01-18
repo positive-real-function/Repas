@@ -1,0 +1,22 @@
+<!--pages/message/apology/index.wxml-->
+<view class="write-page">
+  <view class="header">
+    <view class="left" bindtap="goBack">取消</view>
+    <view class="right" bindtap="publishMessage">发送</view>
+  </view>
+
+  <view class="content">
+    <textarea class="message-input" 
+              placeholder="写下你想说的悄悄话..." 
+              placeholder-style="color: #adc5e6"
+              maxlength="5200"
+              bindinput="onInput"
+              value="{{message}}"
+              auto-focus></textarea>
+    <view class="char-count">{{charCount}}/5200</view>
+  </view>
+
+  <button class="send-btn" bindtap="publishMessage" hover-class="button-hover">
+    发送悄悄话
+  </button>
+</view>

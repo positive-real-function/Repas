@@ -8,6 +8,8 @@
     "pages/diary/add/index",
     "pages/anniversary/index",
     "pages/message/index",
+    "pages/message/write/index",
+    "pages/message/apology/index",
     "pages/sports/index",
     "pages/list/index",
     "pages/toilet/index",

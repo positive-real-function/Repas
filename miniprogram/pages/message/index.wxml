@@ -1,2 +1,81 @@
 <!--pages/message/index.wxml-->
-<text>pages/message/index.wxml</text>
+<view class="message-page" bindtap="onPageTap">
+  <!-- 顶部标题栏 -->
+  <view class="header" style="position: relative; left: 0rpx; top: 10rpx">
+    <view class="left" catchtap="showTabMenu">
+      <text>{{tabList[currentTab]}}</text>
+      <text class="arrow">></text>
+    </view>
+    <view class="right" bindtap="onSearch">
+      <image class="search-icon" src="/images/icons/search.png" mode="aspectFit"></image>
+    </view>
+  </view>
+
+  <!-- 搜索框 -->
+  <view class="search-box" wx:if="{{showSearch}}">
+    <input class="search-input" 
+           placeholder="搜索留言" 
+           value="{{searchKey}}"
+           bindinput="onSearchInput"
+           confirm-type="search"/>
+    <view class="search-cancel" bindtap="closeSearch">取消</view>
+  </view>
+
+  <!-- 下拉菜单 -->
+  <view class="tab-menu {{showMenu ? 'show' : ''}}" wx:if="{{showMenu}}">
+    <view class="tab-item {{currentTab === 'all' ? 'active' : ''}}" 
+          catchtap="switchTab" data-tab="all">全部</view>
+    <view class="tab-item {{currentTab === 'mine' ? 'active' : ''}}" 
+          catchtap="switchTab" data-tab="mine">我的</view>
+    <view class="tab-item {{currentTab === 'lover' ? 'active' : ''}}" 
+          catchtap="switchTab" data-tab="lover">Ta的</view>
+    <view class="tab-item {{currentTab === 'apology' ? 'active' : ''}}" 
+          catchtap="switchTab" data-tab="apology">悄悄话</view>
+    <view class="tab-item" catchtap="closeMenu">取消</view>
+  </view>
+
+  <!-- 留言列表 -->
+  <block wx:if="{{messages.length > 0}}">
+    <view class="message-list">
+      <view class="message-item {{item.userName === 'Elie' ? 'elie-card' : 'nora-card'}}" 
+            wx:for="{{messages}}" 
+            wx:key="index"
+            bindlongpress="onLongPressCard"
+            data-id="{{item._id}}"
+            data-user="{{item.userName}}">
+        <view class="user-avatar">
+          <image src="{{item.avatar}}" mode="aspectFill"></image>
+        </view>
+        <view class="message-content">
+          <view class="user-name">{{item.userName}}</view>
+          <view class="message-text">{{item.content}}</view>
+          <view class="message-time">{{item.time}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="reach-bottom" wx:if="{{reachBottom}}">到底啦</view>
+  </block>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:else>
+    <image class="empty-icon" src="/images/empty-message.png" mode="aspectFit"></image>
+    <view class="empty-text">这里什么都没有，快去给Ta写留言吧</view>
+    <button class="write-message-btn" bindtap="onWriteMessage">给TA写留言</button>
+  </view>
+
+  <!-- 底部按钮组 -->
+  <view class="bottom-btns">
+    <view class="menu-item {{showApologyMenu ? 'show' : ''}}" 
+          catch:tap="onGoToApologyHelper">
+      <text>悄悄话</text>
+    </view>
+    <view class="float-btn {{showApologyMenu ? 'show-menu' : ''}}" 
+          bindtap="onWriteMessage" 
+          bindlongpress="onLongPress">
+      <text class="plus-icon">+</text>
+    </view>
+  </view>
+
+  <!-- 添加遮罩层 -->
+  <view class="menu-mask" wx:if="{{showMenu}}" bindtap="hideMenu"></view>
+</view>

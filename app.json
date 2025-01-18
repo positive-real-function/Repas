@@ -6,7 +6,10 @@
     "pages/diary/index",
     "pages/diary/edit/index",
     "pages/toilet/add/index",
-    "pages/toilet/detail/index"
+    "pages/toilet/detail/index",
+    "pages/message/index",
+    "pages/message/write/index",
+    "pages/message/apology/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
