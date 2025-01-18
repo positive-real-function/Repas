@@ -34,8 +34,8 @@
     <view class="tab-item" catchtap="closeMenu">取消</view>
   </view>
 
-  <!-- 加载中状态 -->
-  <view class="loading-state" wx:if="{{loading}}">
+  <!-- 通用加载状态 -->
+  <view class="loading-state" wx:if="{{pageLoading || loading}}">
     <view class="loading-icon"></view>
   </view>
 

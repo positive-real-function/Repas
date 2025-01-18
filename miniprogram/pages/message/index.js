@@ -9,7 +9,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    loading: true,  // 添加 loading 状态
+    pageLoading: false,  // 添加通用loading状态
+    loading: true,  // 保留原有的列表loading状态
     messages: [], // 留言列表
     reachBottom: false, // 是否到底
     page: 1,
@@ -419,7 +420,7 @@ Page({
         content: '确定要删除这条留言吗？',
         success: async (res) => {
           if (res.confirm) {
-            wx.showLoading({ title: '删除中' });
+            this.setData({ pageLoading: true });
             try {
               // 从云数据库删除
               await messagesCollection.doc(messageId).remove();
@@ -446,7 +447,7 @@ Page({
                 });
               }
             } finally {
-              wx.hideLoading();
+              this.setData({ pageLoading: false });
             }
           }
         }
@@ -527,7 +528,7 @@ Page({
     const messageIndex = this.data.currentMessageIndex;
     const message = this.data.messages[messageIndex];
 
-    wx.showLoading({ title: '发送中' });
+    this.setData({ pageLoading: true });
     try {
       // 在replies集合中添加新回复
       const result = await repliesCollection.add({
@@ -573,7 +574,7 @@ Page({
         icon: 'none'
       });
     } finally {
-      wx.hideLoading();
+      this.setData({ pageLoading: false });
     }
   },
 
@@ -594,7 +595,7 @@ Page({
       content: '确定要删除这条回复吗？',
       success: async (res) => {
         if (res.confirm) {
-          wx.showLoading({ title: '删除中' });
+          this.setData({ pageLoading: true });
           try {
             // 直接从数据库中删除回复
             await repliesCollection.doc(replyId).remove();
@@ -619,7 +620,7 @@ Page({
               icon: 'none'
             });
           } finally {
-            wx.hideLoading();
+            this.setData({ pageLoading: false });
           }
         }
       }
