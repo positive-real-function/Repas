@@ -2,13 +2,12 @@
 <view class="write-page">
   <view class="header">
     <view class="left" bindtap="goBack">取消</view>
-    <view class="right" bindtap="publishMessage">发送</view>
   </view>
 
   <view class="content">
     <textarea class="message-input" 
               placeholder="写下你想说的悄悄话..." 
-              placeholder-style="color: #adc5e6"
+              placeholder-style="color: #999999; font-size: 32rpx;"
               maxlength="5200"
               bindinput="onInput"
               value="{{message}}"
