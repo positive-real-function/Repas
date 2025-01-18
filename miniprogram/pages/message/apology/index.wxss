@@ -29,6 +29,17 @@
   margin-right: -20rpx;
 }
 
+.input-header {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 20rpx;
+}
+
+.limit-text {
+  color: #999999;
+  font-size: 28rpx;
+}
+
 .content {
   background: white;
   border-radius: 16rpx;

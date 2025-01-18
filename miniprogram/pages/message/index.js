@@ -24,7 +24,9 @@ Page({
     searchKey: '',
     searchResult: [],
     showApologyMenu: false,  // 用于底部悄悄话菜单
-    userInfo: null
+    userInfo: null,
+    showReplyPanel: false,
+    currentMessageIndex: -1
   },
 
   /**
@@ -439,5 +441,51 @@ Page({
         messageUser: userName
       });
     }
+  },
+
+  // 切换回复面板
+  toggleReply(e) {
+    const index = e.currentTarget.dataset.index;
+    const messages = this.data.messages;
+    
+    // 更新箭头方向
+    messages[index].showReply = !messages[index].showReply;
+    
+    this.setData({
+      messages,
+      showReplyPanel: messages[index].showReply,
+      currentMessageIndex: index
+    });
+  },
+
+  // 关闭回复面板
+  closeReply() {
+    const messages = this.data.messages;
+    if (this.data.currentMessageIndex >= 0) {
+      messages[this.data.currentMessageIndex].showReply = false;
+    }
+    
+    this.setData({
+      messages,
+      showReplyPanel: false,
+      currentMessageIndex: -1
+    });
+  },
+
+  // 输入框获得焦点
+  onReplyFocus(e) {
+    const keyboardHeight = e.detail.height;
+    // 立即更新位置，不等待 nextTick
+    this.setData({
+      replyPanelBottom: keyboardHeight
+    });
+  },
+
+  // 输入框失去焦点
+  onReplyBlur() {
+    // 立即更新位置，不等待 nextTick
+    this.setData({
+      replyPanelBottom: 0
+    });
   }
 })

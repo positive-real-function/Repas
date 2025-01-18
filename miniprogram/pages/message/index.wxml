@@ -51,6 +51,9 @@
           <view class="message-text">{{item.content}}</view>
           <view class="message-time">{{item.time}}</view>
         </view>
+        <view class="message-arrow" catchtap="toggleReply" data-index="{{index}}">
+          <text class="arrow-icon {{item.showReply ? 'up' : ''}}">v</text>
+        </view>
       </view>
     </view>
     <view class="reach-bottom" wx:if="{{reachBottom}}">到底啦</view>
@@ -58,7 +61,7 @@
 
   <!-- 空状态 -->
   <view class="empty-state" wx:else>
-    <image class="empty-icon" src="/images/empty-message.png" mode="aspectFit"></image>
+    <image class="empty-icon" src="/images/icons/empty-message.png" mode="aspectFit"></image>
     <view class="empty-text">这里什么都没有，快去给Ta写留言吧</view>
     <button class="write-message-btn" bindtap="onWriteMessage">给TA写留言</button>
   </view>
@@ -78,4 +81,28 @@
 
   <!-- 添加遮罩层 -->
   <view class="menu-mask" wx:if="{{showMenu}}" bindtap="hideMenu"></view>
+
+  <!-- 回复面板背景 -->
+  <view class="reply-panel {{showReplyPanel ? 'show' : ''}}" style="bottom: {{replyPanelBottom}}px">
+    <view class="reply-header">回复留言</view>
+    <view class="reply-input-box">
+      <textarea class="reply-input" 
+                placeholder="写下你的回复..." 
+                cursor-spacing="20"
+                maxlength="500"
+                show-confirm-bar="{{false}}"
+                adjust-position="{{false}}"
+                fixed="{{true}}"
+                focus="{{showReplyPanel}}"
+                bindfocus="onReplyFocus"
+                bindblur="onReplyBlur"/>
+      <view class="reply-toolbar">
+        <image class="emoji-btn" src="/images/icons/emoji.png" mode="aspectFit"/>
+        <view class="reply-btn">发布</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 遮罩层 -->
+  <view class="reply-mask {{showReplyPanel ? 'show' : ''}}" bindtap="closeReply"></view>
 </view>
