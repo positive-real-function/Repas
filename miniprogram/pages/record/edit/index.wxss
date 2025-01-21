@@ -10,12 +10,15 @@
   height: 240px;
   background: #f6f6f6;
   margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 .image-preview {
   width: 100%;
   height: 100%;
   position: relative;
+  background: #fff;
 }
 
 .preview-image {
@@ -76,6 +79,27 @@
   align-items: center;
   justify-content: center;
   color: #999;
+}
+
+.has-image .add-image-btn {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+
+.has-image .add-image-btn .plus {
+  font-size: 24px;
+  margin-bottom: 0;
+  color: #fff;
+}
+
+.has-image .add-image-btn .tip {
+  display: none;
 }
 
 .plus {

@@ -1,6 +1,6 @@
 <view class="edit-container">
   <!-- 图片预览区域 -->
-  <view class="preview-container">
+  <view class="preview-container {{imagePaths.length > 0 ? 'has-image' : ''}}">
     <view class="image-preview" wx:if="{{imagePaths.length > 0}}">
       <image 
         class="preview-image" 
@@ -8,7 +8,7 @@
         mode="aspectFill"
       />
       <!-- 图片导航按钮 -->
-      <view class="image-nav" wx:if="{{imagePaths.length > 1}}">
+      <view class="image-nav" wx:if="{{imagePaths.length > 1}}" catchtap>
         <view 
           class="nav-btn {{currentImageIndex === 0 ? 'disabled' : ''}}" 
           bindtap="changeImage" 
@@ -35,7 +35,7 @@
       wx:if="{{imagePaths.length < 3}}"
     >
       <text class="plus">+</text>
-      <text class="tip">添加图片 ({{imagePaths.length}}/3)</text>
+      <text class="tip" wx:if="{{imagePaths.length === 0}}">添加图片 ({{imagePaths.length}}/3)</text>
     </view>
   </view>
 

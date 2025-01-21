@@ -39,6 +39,8 @@
           <view class="meal-image-container" 
                 bindlongpress="onItemLongPress" 
                 bindtouchend="onItemTouchEnd"
+                bindtouchstart="handleTouchStart"
+                bindtouchend="handleTouchEnd"
                 data-meal="{{meal}}"
                 data-date-index="{{dateIndex}}"
                 data-meal-index="{{index}}">
@@ -50,21 +52,6 @@
               data-meal="{{meal}}"
               style="transform: scale({{scaleMealId === meal._id ? 0.95 : 1}});"
             />
-            <!-- 图片导航按钮 -->
-            <view class="image-nav" wx:if="{{meal.images.length > 1}}" catchtap>
-              <view 
-                class="nav-btn {{!mealImageIndexes[meal._id] ? 'disabled' : ''}}" 
-                catchtap="changeMealImage" 
-                data-meal="{{meal}}"
-                data-direction="prev"
-              >＜</view>
-              <view 
-                class="nav-btn {{(mealImageIndexes[meal._id] || 0) === meal.images.length - 1 ? 'disabled' : ''}}" 
-                catchtap="changeMealImage" 
-                data-meal="{{meal}}"
-                data-direction="next"
-              >＞</view>
-            </view>
             <!-- 图片指示器 -->
             <view class="image-indicator" wx:if="{{meal.images.length > 1}}">
               {{(mealImageIndexes[meal._id] || 0) + 1}}/{{meal.images.length}}

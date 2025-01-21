@@ -10,7 +10,8 @@ Page({
     price: '',
     currencySymbol: '¥',
     recordId: '',
-    isEdit: false
+    isEdit: false,
+    tempImagePaths: []
   },
 
   onLoad(options) {
@@ -28,6 +29,11 @@ Page({
     if (this.data.isEdit) {
       this.loadRecordDetail();
     }
+
+    // 监听返回按钮事件
+    wx.enableAlertBeforeUnload({
+      message: '离开后已上传的图片将被删除，确定要离开吗？'
+    });
   },
 
   async loadRecordDetail() {
@@ -116,7 +122,8 @@ Page({
       const newImagePaths = uploadResults.map(result => result.fileID);
 
       this.setData({
-        imagePaths: [...this.data.imagePaths, ...newImagePaths]
+        imagePaths: [...this.data.imagePaths, ...newImagePaths],
+        tempImagePaths: [...this.data.tempImagePaths, ...newImagePaths]
       });
 
       wx.showToast({
@@ -216,6 +223,11 @@ Page({
 
       console.log('保存结果：', result);
 
+      // 保存成功后清空临时图片记录
+      this.setData({
+        tempImagePaths: []
+      });
+
       wx.showToast({
         title: '保存成功',
         icon: 'success'
@@ -243,5 +255,42 @@ Page({
     } finally {
       wx.hideLoading();
     }
+  },
+
+  handleBack() {
+    if (this.data.tempImagePaths.length > 0) {
+      wx.showModal({
+        title: '确认离开',
+        content: '离开后已上传的图片将被删除，确定要离开吗？',
+        success: (res) => {
+          if (res.confirm) {
+            this.cleanupTempImages();
+            wx.navigateBack();
+          }
+        }
+      });
+    } else {
+      wx.navigateBack();
+    }
+  },
+
+  async cleanupTempImages() {
+    if (this.data.tempImagePaths.length > 0) {
+      try {
+        await wx.cloud.deleteFile({
+          fileList: this.data.tempImagePaths
+        });
+        this.setData({
+          tempImagePaths: []
+        });
+      } catch (err) {
+        console.error('删除临时图片失败：', err);
+      }
+    }
+  },
+
+  onUnload() {
+    // 页面卸载时清理临时图片
+    this.cleanupTempImages();
   }
 }); 

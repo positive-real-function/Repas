@@ -24,7 +24,8 @@ Page({
       outline: 'cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/icons/heart-outline.png',
       filled: 'cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/icons/heart-filled.png'
     },
-    mealImageIndexes: {} // 存储每个餐点当前显示的图片索引
+    mealImageIndexes: {}, // 存储每个餐点当前显示的图片索引
+    touchStartX: 0, // 记录触摸开始位置
   },
 
   onLoad() {
@@ -308,6 +309,38 @@ Page({
       wx.showToast({
         title: '操作失败',
         icon: 'none'
+      });
+    }
+  },
+
+  // 触摸开始事件
+  handleTouchStart(e) {
+    this.setData({
+      touchStartX: e.touches[0].clientX
+    });
+  },
+
+  // 触摸结束事件
+  handleTouchEnd(e) {
+    const { meal } = e.currentTarget.dataset;
+    if (!meal || !meal.images || meal.images.length <= 1) return;
+
+    const touchEndX = e.changedTouches[0].clientX;
+    const moveX = touchEndX - this.data.touchStartX;
+    
+    // 判断滑动方向和距离是否足够
+    if (Math.abs(moveX) > 50) { // 滑动距离超过50px才触发
+      const currentIndex = this.data.mealImageIndexes[meal._id] || 0;
+      let newIndex = currentIndex;
+
+      if (moveX > 0) { // 右滑，显示上一张
+        newIndex = Math.max(0, currentIndex - 1);
+      } else { // 左滑，显示下一张
+        newIndex = Math.min(meal.images.length - 1, currentIndex + 1);
+      }
+
+      this.setData({
+        [`mealImageIndexes.${meal._id}`]: newIndex
       });
     }
   }
