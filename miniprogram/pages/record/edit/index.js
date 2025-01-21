@@ -1,6 +1,7 @@
 Page({
   data: {
-    imagePath: '',
+    imagePaths: [],
+    currentImageIndex: 0,
     user: '',
     avatar: '',
     mealTypes: ['早餐', '午餐', '晚餐', '夜宵'],
@@ -13,11 +14,10 @@ Page({
   },
 
   onLoad(options) {
-    const { imagePath, user, avatar } = options;
+    const { user, avatar } = options;
     const currencySymbol = user === 'Nora' ? '¥' : '€';
     
     this.setData({
-      imagePath,
       user,
       avatar,
       currencySymbol,
@@ -48,7 +48,8 @@ Page({
         mealName: record.name,
         price: priceNumber,
         currencySymbol: record.price.startsWith('¥') ? '¥' : '€',
-        imagePath: record.image
+        imagePaths: record.images || [],
+        currentImageIndex: 0
       });
     } catch (err) {
       console.error('加载记录失败：', err);
@@ -79,7 +80,94 @@ Page({
     });
   },
 
+  chooseImages() {
+    const remainCount = 3 - this.data.imagePaths.length;
+    if (remainCount <= 0) {
+      wx.showToast({
+        title: '最多上传3张图片',
+        icon: 'none'
+      });
+      return;
+    }
+
+    wx.chooseMedia({
+      count: remainCount,
+      mediaType: ['image'],
+      sourceType: ['camera', 'album'],
+      camera: 'back',
+      success: (res) => {
+        const tempFiles = res.tempFiles;
+        this.uploadImages(tempFiles.map(file => file.tempFilePath));
+      }
+    });
+  },
+
+  async uploadImages(tempFilePaths) {
+    wx.showLoading({ title: '上传中...' });
+    try {
+      const uploadTasks = tempFilePaths.map(filePath => 
+        wx.cloud.uploadFile({
+          cloudPath: `meal_photos/${Date.now()}-${Math.random().toString(36).substr(2)}.jpg`,
+          filePath: filePath
+        })
+      );
+
+      const uploadResults = await Promise.all(uploadTasks);
+      const newImagePaths = uploadResults.map(result => result.fileID);
+
+      this.setData({
+        imagePaths: [...this.data.imagePaths, ...newImagePaths]
+      });
+
+      wx.showToast({
+        title: '上传成功',
+        icon: 'success'
+      });
+    } catch (err) {
+      console.error('上传失败：', err);
+      wx.showToast({
+        title: '上传失败',
+        icon: 'none'
+      });
+    } finally {
+      wx.hideLoading();
+    }
+  },
+
+  deleteImage(e) {
+    const index = e.currentTarget.dataset.index;
+    const imagePaths = [...this.data.imagePaths];
+    imagePaths.splice(index, 1);
+    this.setData({ 
+      imagePaths,
+      currentImageIndex: Math.min(this.data.currentImageIndex, imagePaths.length - 1)
+    });
+  },
+
+  changeImage(e) {
+    const direction = e.currentTarget.dataset.direction;
+    let newIndex = this.data.currentImageIndex;
+    
+    if (direction === 'prev') {
+      newIndex = Math.max(0, newIndex - 1);
+    } else {
+      newIndex = Math.min(this.data.imagePaths.length - 1, newIndex + 1);
+    }
+    
+    this.setData({
+      currentImageIndex: newIndex
+    });
+  },
+
   async saveRecord() {
+    if (this.data.imagePaths.length === 0) {
+      wx.showToast({
+        title: '请至少上传一张图片',
+        icon: 'none'
+      });
+      return;
+    }
+
     // 表单验证
     if (!this.data.mealName.trim()) {
       wx.showToast({
@@ -110,7 +198,8 @@ Page({
         price: `${this.data.currencySymbol}${this.data.price}`,
         user: this.data.user,
         avatar: this.data.avatar,
-        image: this.data.imagePath
+        images: this.data.imagePaths,
+        image: this.data.imagePaths[0]
       };
 
       let result;

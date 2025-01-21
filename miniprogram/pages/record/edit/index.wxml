@@ -1,6 +1,43 @@
 <view class="edit-container">
-  <!-- 预览图片 -->
-  <image class="preview-image" src="{{imagePath}}" mode="aspectFill"></image>
+  <!-- 图片预览区域 -->
+  <view class="preview-container">
+    <view class="image-preview" wx:if="{{imagePaths.length > 0}}">
+      <image 
+        class="preview-image" 
+        src="{{imagePaths[currentImageIndex]}}" 
+        mode="aspectFill"
+      />
+      <!-- 图片导航按钮 -->
+      <view class="image-nav" wx:if="{{imagePaths.length > 1}}">
+        <view 
+          class="nav-btn {{currentImageIndex === 0 ? 'disabled' : ''}}" 
+          bindtap="changeImage" 
+          data-direction="prev"
+        >＜</view>
+        <view 
+          class="nav-btn {{currentImageIndex === imagePaths.length - 1 ? 'disabled' : ''}}" 
+          bindtap="changeImage" 
+          data-direction="next"
+        >＞</view>
+      </view>
+      <!-- 删除按钮 -->
+      <view 
+        class="delete-btn" 
+        bindtap="deleteImage" 
+        data-index="{{currentImageIndex}}"
+      >×</view>
+    </view>
+    
+    <!-- 添加图片按钮 -->
+    <view 
+      class="add-image-btn" 
+      bindtap="chooseImages" 
+      wx:if="{{imagePaths.length < 3}}"
+    >
+      <text class="plus">+</text>
+      <text class="tip">添加图片 ({{imagePaths.length}}/3)</text>
+    </view>
+  </view>
 
   <!-- 编辑表单 -->
   <view class="form-container">

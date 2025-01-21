@@ -23,7 +23,8 @@ Page({
     heartImages: {
       outline: 'cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/icons/heart-outline.png',
       filled: 'cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/icons/heart-filled.png'
-    }
+    },
+    mealImageIndexes: {} // 存储每个餐点当前显示的图片索引
   },
 
   onLoad() {
@@ -143,47 +144,51 @@ Page({
 
   // 添加新记录
   addNewRecord() {
-    wx.chooseMedia({
-      count: 1,
-      mediaType: ['image'],
-      sourceType: ['camera', 'album'],
-      camera: 'back',
-      success: (res) => {
-        const tempFilePath = res.tempFiles[0].tempFilePath;
-        this.uploadImage(tempFilePath);
-      }
+    // 直接导航到编辑页面，不再先选择图片
+    wx.navigateTo({
+      url: `/pages/record/edit/index?user=${this.data.currentTab}&avatar=${this.data.avatars[this.data.currentTab]}`
     });
   },
 
-  // 上传图片
-  async uploadImage(tempFilePath) {
-    wx.showLoading({ title: '上传中...' });
-    try {
-      const result = await wx.cloud.uploadFile({
-        cloudPath: `meal_photos/${Date.now()}-${Math.random().toString(36).substr(2)}.jpg`,
-        filePath: tempFilePath
-      });
-      
-      wx.navigateTo({
-        url: `/pages/record/edit/index?imagePath=${result.fileID}&user=${this.data.currentTab}&avatar=${this.data.avatars[this.data.currentTab]}`
-      });
-    } catch (err) {
-      console.error('上传失败：', err);
-      wx.showToast({
-        title: '上传失败',
-        icon: 'none'
-      });
-    } finally {
-      wx.hideLoading();
+  // 切换餐点图片
+  changeMealImage(e) {
+    const { meal, direction } = e.currentTarget.dataset;
+    if (!meal || !meal.images || meal.images.length <= 1) return;
+
+    const currentIndex = this.data.mealImageIndexes[meal._id] || 0;
+    let newIndex = currentIndex;
+
+    if (direction === 'prev') {
+      newIndex = Math.max(0, currentIndex - 1);
+    } else {
+      newIndex = Math.min(meal.images.length - 1, currentIndex + 1);
     }
+
+    this.setData({
+      [`mealImageIndexes.${meal._id}`]: newIndex
+    });
+  },
+
+  // 根据ID查找餐点记录
+  findMealById(mealId) {
+    for (const dateGroup of this.data.mealRecords) {
+      const meal = dateGroup.meals.find(m => m._id === mealId);
+      if (meal) return meal;
+    }
+    return null;
   },
 
   // 预览图片
   previewImage(e) {
-    const { image } = e.currentTarget.dataset;
+    const { meal } = e.currentTarget.dataset;
+    if (!meal) return;
+
+    // 处理兼容性：如果没有 images 数组，则使用单张 image
+    const images = meal.images && meal.images.length > 0 ? meal.images : [meal.image];
+    
     wx.previewImage({
-      urls: [image],
-      current: image
+      urls: images,
+      current: images[this.data.mealImageIndexes[meal._id] || 0]
     });
   },
 
@@ -198,9 +203,9 @@ Page({
       itemList: ['修改', '删除'],
       success: (res) => {
         if (res.tapIndex === 0) {
-          // 修改
+          // 修改 - 更新跳转参数以支持多图片
           wx.navigateTo({
-            url: `/pages/record/edit/index?id=${meal._id}&imagePath=${meal.image}&user=${meal.user}&avatar=${meal.avatar}&isEdit=true`
+            url: `/pages/record/edit/index?id=${meal._id}&user=${meal.user}&avatar=${meal.avatar}&isEdit=true`
           });
         } else if (res.tapIndex === 1) {
           // 删除
@@ -218,10 +223,10 @@ Page({
                   // 删除数据库记录
                   await db.collection('meal_records').doc(meal._id).remove();
                   
-                  // 删除云存储中的图片
-                  if (meal.image) {
+                  // 删除云存储中的所有图片
+                  if (meal.images && meal.images.length > 0) {
                     await wx.cloud.deleteFile({
-                      fileList: [meal.image]
+                      fileList: meal.images
                     });
                   }
 

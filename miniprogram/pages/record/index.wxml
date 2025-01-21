@@ -44,12 +44,31 @@
                 data-meal-index="{{index}}">
             <image 
               class="meal-image" 
-              src="{{meal.image}}" 
+              src="{{(meal.images && meal.images.length > 0) ? meal.images[mealImageIndexes[meal._id] || 0] : meal.image}}" 
               mode="aspectFill" 
-              bindtap="previewImage"
-              data-image="{{meal.image}}"
+              catchtap="previewImage"
+              data-meal="{{meal}}"
               style="transform: scale({{scaleMealId === meal._id ? 0.95 : 1}});"
             />
+            <!-- 图片导航按钮 -->
+            <view class="image-nav" wx:if="{{meal.images.length > 1}}" catchtap>
+              <view 
+                class="nav-btn {{!mealImageIndexes[meal._id] ? 'disabled' : ''}}" 
+                catchtap="changeMealImage" 
+                data-meal="{{meal}}"
+                data-direction="prev"
+              >＜</view>
+              <view 
+                class="nav-btn {{(mealImageIndexes[meal._id] || 0) === meal.images.length - 1 ? 'disabled' : ''}}" 
+                catchtap="changeMealImage" 
+                data-meal="{{meal}}"
+                data-direction="next"
+              >＞</view>
+            </view>
+            <!-- 图片指示器 -->
+            <view class="image-indicator" wx:if="{{meal.images.length > 1}}">
+              {{(mealImageIndexes[meal._id] || 0) + 1}}/{{meal.images.length}}
+            </view>
             <image class="heart-icon"
                    src="{{meal.liked ? heartImages.filled : heartImages.outline}}"
                    catchtap="handleHeartTap"
