@@ -44,7 +44,7 @@
         "selectedIconPath": "images/icons/meal-active.png"
       },
       {
-        "pagePath": "pages/developing/index",
+        "pagePath": "pages/remind/index",
         "text": "Remind",
         "iconPath": "images/icons/remind.png",
         "selectedIconPath": "images/icons/remind-active.png"
