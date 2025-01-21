@@ -4,7 +4,7 @@
   <view class="header">
     <view class="title">每一迹</view>
     <view class="settings-icon" bindtap="showSettings">
-      <image src="/images/anniversary/settings.png" mode="aspectFit"></image>
+      <image src="/images/icons/settings.png" mode="aspectFit"></image>
     </view>
   </view>
 
@@ -26,7 +26,7 @@
     <!-- 开学纪念日卡片 -->
     <view class="anniversary-card">
       <view class="card-icon">
-        <image src="/images/anniversary/book.png" mode="aspectFit"></image>
+        <image src="cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/anniversary/book.png" mode="aspectFit"></image>
       </view>
       <view class="card-content">
         <view class="card-title">开学已经</view>
@@ -38,7 +38,7 @@
     <!-- 生日纪念日卡片 -->
     <view class="anniversary-card">
       <view class="card-icon">
-        <image src="/images/anniversary/cake.png" mode="aspectFit"></image>
+        <image src="cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/anniversary/cake.png" mode="aspectFit"></image>
       </view>
       <view class="card-content">
         <view class="card-title">小宝生日还有</view>
@@ -50,7 +50,7 @@
     <!-- 在一起纪念日卡片 -->
     <view class="anniversary-card">
       <view class="card-icon">
-        <image src="/images/anniversary/heart.png" mode="aspectFit"></image>
+        <image src="cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/anniversary/heart.png" mode="aspectFit"></image>
       </view>
       <view class="card-content">
         <view class="card-title">在一起还有</view>
