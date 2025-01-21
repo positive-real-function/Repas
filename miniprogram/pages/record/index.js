@@ -18,7 +18,12 @@ Page({
     currentDateIndex: null,
     currentMealIndex: null,
     scaleIndex: -1,
-    scaleMealId: null
+    scaleMealId: null,
+    lastTapTime: 0,
+    heartImages: {
+      outline: '/images/icons/heart-outline.png',
+      filled: '/images/icons/heart-filled.png'
+    }
   },
 
   onLoad() {
@@ -260,5 +265,45 @@ Page({
     this.setData({
       scaleMealId: null
     });
+  },
+
+  async handleHeartTap(e) {
+    const { meal, dateIndex, mealIndex } = e.currentTarget.dataset;
+    await this.toggleLikeStatus(meal, dateIndex, mealIndex);
+  },
+
+  async toggleLikeStatus(meal, dateIndex, mealIndex) {
+    try {
+      const db = wx.cloud.database();
+      const newLikedStatus = !meal.liked;
+      
+      // 更新数据库
+      await db.collection('meal_records').doc(meal._id).update({
+        data: {
+          liked: newLikedStatus
+        }
+      });
+
+      // 更新本地数据
+      const mealRecords = [...this.data.mealRecords];
+      mealRecords[dateIndex].meals[mealIndex].liked = newLikedStatus;
+      
+      this.setData({
+        mealRecords: mealRecords
+      });
+
+      // 显示提示
+      wx.showToast({
+        title: newLikedStatus ? '已添加喜欢' : '已取消喜欢',
+        icon: 'none'
+      });
+      
+    } catch (err) {
+      console.error('更新点赞状态失败：', err);
+      wx.showToast({
+        title: '操作失败',
+        icon: 'none'
+      });
+    }
   }
 });

@@ -36,15 +36,27 @@
           bindlongpress="onItemLongPress"
           bindtouchend="onItemTouchEnd"
         >
-          <image 
-            class="meal-image" 
-            src="{{meal.image}}" 
-            mode="aspectFill"
-            data-image="{{meal.image}}"
-            data-index="{{index}}"
-            data-date-index="{{dateIndex}}"
-            bindtap="previewImage"
-          ></image>
+          <view class="meal-image-container" 
+                bindlongpress="onItemLongPress" 
+                bindtouchend="onItemTouchEnd"
+                data-meal="{{meal}}"
+                data-date-index="{{dateIndex}}"
+                data-meal-index="{{index}}">
+            <image 
+              class="meal-image" 
+              src="{{meal.image}}" 
+              mode="aspectFill" 
+              bindtap="previewImage"
+              data-image="{{meal.image}}"
+              style="transform: scale({{scaleMealId === meal._id ? 0.95 : 1}});"
+            />
+            <image class="heart-icon"
+                   src="{{meal.liked ? heartImages.filled : heartImages.outline}}"
+                   catchtap="handleHeartTap"
+                   data-meal="{{meal}}"
+                   data-date-index="{{dateIndex}}"
+                   data-meal-index="{{index}}"/>
+          </view>
           <view class="meal-type-bar">
             <text class="meal-type">{{meal.type}}</text>
             <text class="meal-price">{{meal.price}}</text>
