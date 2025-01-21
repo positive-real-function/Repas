@@ -4,7 +4,7 @@ Page({
     currentImageIndex: 0,
     user: '',
     avatar: '',
-    mealTypes: ['早餐', '午餐', '晚餐', '夜宵'],
+    mealTypes: ['早餐', '午餐', '下午茶', '晚餐', '夜宵', '零食', '嘴巴空空'],
     selectedType: '午餐',
     mealName: '',
     price: '',
