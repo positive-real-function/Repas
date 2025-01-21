@@ -1,1 +1,156 @@
 /* pages/anniversary/index.wxss */
+.container {
+  padding: 24rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.settings-icon image {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.filter-tabs {
+  margin: 20rpx 0;
+  white-space: nowrap;
+}
+
+.tabs-container {
+  display: inline-flex;
+  padding: 0 4rpx;
+}
+
+.tab {
+  padding: 12rpx 32rpx;
+  background-color: #fff;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+  margin-right: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.tab:last-child {
+  margin-right: 0;
+}
+
+.tab.active {
+  background-color: #000;
+  color: #fff;
+}
+
+.anniversary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+  padding: 12rpx 0;
+}
+
+.anniversary-card {
+  background-color: #fff;
+  border-radius: 48rpx;
+  padding: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 160rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.anniversary-card:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.card-icon image {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.card-content {
+  flex: 1;
+  margin-left: 30rpx;
+}
+
+.card-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  margin-bottom: 12rpx;
+}
+
+.card-date {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.card-days {
+  font-size: 44rpx;
+  font-weight: bold;
+}
+
+.card-days.pink {
+  color: #ff69b4;
+}
+
+.add-button {
+  position: fixed;
+  bottom: 48rpx;
+  right: 48rpx;
+  width: 110rpx;
+  height: 110rpx;
+  background-color: #000;
+  border-radius: 999rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.add-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 使用CSS创建加号图标 */
+.plus-icon {
+  position: relative;
+  width: 44rpx;
+  height: 44rpx;
+}
+
+.plus-icon::before,
+.plus-icon::after {
+  content: '';
+  position: absolute;
+  background-color: #fff;
+  border-radius: 4rpx;
+}
+
+.plus-icon::before {
+  width: 44rpx;
+  height: 4rpx;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.plus-icon::after {
+  width: 4rpx;
+  height: 44rpx;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}

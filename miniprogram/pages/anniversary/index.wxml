@@ -1,2 +1,67 @@
 <!--pages/anniversary/index.wxml-->
-<text>pages/anniversary/index.wxml</text>
+<view class="container">
+  <!-- 顶部标题和图标 -->
+  <view class="header">
+    <view class="title">每一迹</view>
+    <view class="settings-icon" bindtap="showSettings">
+      <image src="/images/anniversary/settings.png" mode="aspectFit"></image>
+    </view>
+  </view>
+
+  <!-- 标签筛选 -->
+  <scroll-view scroll-x class="filter-tabs" enhanced show-scrollbar="{{false}}">
+    <view class="tabs-container">
+      <view wx:for="{{tabs}}" 
+            wx:key="id" 
+            class="tab {{currentTab === item.id ? 'active' : ''}}" 
+            bindtap="switchTab" 
+            data-tab="{{item.id}}">
+        {{item.name}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 纪念日卡片列表 -->
+  <view class="anniversary-list">
+    <!-- 开学纪念日卡片 -->
+    <view class="anniversary-card">
+      <view class="card-icon">
+        <image src="/images/anniversary/book.png" mode="aspectFit"></image>
+      </view>
+      <view class="card-content">
+        <view class="card-title">开学已经</view>
+        <view class="card-date">2022年01月21日</view>
+      </view>
+      <view class="card-days">1096天</view>
+    </view>
+
+    <!-- 生日纪念日卡片 -->
+    <view class="anniversary-card">
+      <view class="card-icon">
+        <image src="/images/anniversary/cake.png" mode="aspectFit"></image>
+      </view>
+      <view class="card-content">
+        <view class="card-title">小宝生日还有</view>
+        <view class="card-date">2025年10月22日</view>
+      </view>
+      <view class="card-days pink">274天</view>
+    </view>
+
+    <!-- 在一起纪念日卡片 -->
+    <view class="anniversary-card">
+      <view class="card-icon">
+        <image src="/images/anniversary/heart.png" mode="aspectFit"></image>
+      </view>
+      <view class="card-content">
+        <view class="card-title">在一起还有</view>
+        <view class="card-date">2025年11月12日</view>
+      </view>
+      <view class="card-days">295天</view>
+    </view>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="add-button" bindtap="onAddTap">
+    <view class="plus-icon"></view>
+  </view>
+</view>

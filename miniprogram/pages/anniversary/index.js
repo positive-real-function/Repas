@@ -5,7 +5,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    currentTab: 'all',
+    tabs: [
+      { id: 'all', name: '全部' },
+      { id: 'baby', name: '和小宝' },
+      // 用户可以添加更多自定义标签
+    ]
   },
 
   /**
@@ -62,5 +67,20 @@ Page({
    */
   onShareAppMessage() {
 
+  },
+
+  switchTab(e) {
+    const tab = e.currentTarget.dataset.tab;
+    this.setData({
+      currentTab: tab
+    });
+  },
+
+  onAddTap() {
+    // 处理添加纪念日的逻辑
+  },
+
+  showSettings() {
+    // 处理显示设置选项的逻辑
   }
 })
