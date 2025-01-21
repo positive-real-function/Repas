@@ -51,7 +51,7 @@
       >
         <view class="picker">
           {{selectedType}}
-          <image class="arrow" src="/images/arrow.svg" mode="aspectFit"></image>
+          <text class="arrow">></text>
         </view>
       </picker>
     </view>
