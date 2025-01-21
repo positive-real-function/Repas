@@ -123,17 +123,17 @@
 
 .add-button {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
-  width: 50px;
-  height: 50px;
-  background: #07C160;
+  right: 40rpx;
+  bottom: 40rpx;
+  width: 100rpx;
+  height: 100rpx;
   border-radius: 50%;
+  background-color: #07c160;
   display: flex;
-  align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(7,193,96,0.3);
-  transition: all 0.3s ease;
+  align-items: center;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.2);
+  z-index: 999;
 }
 
 .add-button:active {

@@ -9,13 +9,30 @@
     "pages/toilet/detail/index",
     "pages/message/index",
     "pages/message/write/index",
-    "pages/message/apology/index"
+    "pages/message/apology/index",
+    "pages/developing/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "Weixin",
     "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "Home"
+      },
+      {
+        "pagePath": "pages/record/index",
+        "text": "Record"
+      },
+      {
+        "pagePath": "pages/developing/index",
+        "text": "Remind"
+      }
+    ]
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json",

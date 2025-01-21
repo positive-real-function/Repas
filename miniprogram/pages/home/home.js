@@ -6,12 +6,12 @@ Page({
    */
   data: {
     modules: [
-      { id: 'diary', name: '日记', icon: '/images/icons/diary.png' },
-      { id: 'anniversary', name: '纪念日', icon: '/images/icons/anniversary.png' },
-      { id: 'message', name: '留言', icon: '/images/icons/message.png' },
-      { id: 'sports', name: '运动', icon: '/images/icons/sports.png' },
-      { id: 'list', name: 'list', icon: '/images/icons/list.png' },
-      { id: 'toilet', name: '拉屎', icon: '/images/icons/toilet.png' }
+      { id: 'diary', name: '日记', icon: 'cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/icons/diary.png' },
+      { id: 'anniversary', name: '纪念日', icon: 'cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/icons/anniversary.png' },
+      { id: 'message', name: '留言', icon: 'cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/icons/message.png' },
+      { id: 'sports', name: '运动', icon: 'cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/icons/sports.png' },
+      { id: 'list', name: 'list', icon: 'cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/icons/list.png' },
+      { id: 'toilet', name: '拉屎', icon: 'cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/icons/toilet.png' }
     ],
     openids: {
       Elie: 'oup1z5Dv4pTjk0iZKjg3BT63EH7g',
@@ -22,8 +22,8 @@ Page({
       isElie: false,
       isNora: false
     },
-    avatarLeft: '/images/headphoto/Nora.jpeg',
-    avatarRight: '/images/headphoto/Elie.jpeg',
+    avatarLeft: 'cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/headphoto/Nora.jpeg',
+    avatarRight: 'cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/headphoto/Elie.jpeg',
     currentDate: '',
     weekDay: '',
     togetherDays: 0
@@ -90,14 +90,6 @@ Page({
   // 点击功能模块
   onModuleTap(e) {
     const moduleId = e.currentTarget.dataset.id;
-    // // 检查权限
-    // if (!this.data.userInfo.isElie && !this.data.userInfo.isNora) {
-    //   wx.showToast({
-    //     title: '无权访问',
-    //     icon: 'none'
-    //   });
-    //   return;
-    // }
     
     setTimeout(() => {
       wx.navigateTo({

@@ -1,2 +1,6 @@
 <!--pages/sports/index.wxml-->
-<text>pages/sports/index.wxml</text>
+<view class="container">
+  <image class="developing-image" src="cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/developing.png" mode="aspectFit"></image>
+  <text class="developing-text">功能正在加急开发中...</text>
+  <text class="developing-subtext">敬请期待</text>
+</view>

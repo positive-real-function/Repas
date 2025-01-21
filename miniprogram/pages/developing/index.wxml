@@ -1,4 +1,3 @@
-<!--pages/list/index.wxml-->
 <!--pages/developing/index.wxml-->
 <view class="container">
   <image class="developing-image" src="cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/developing.png" mode="aspectFit"></image>

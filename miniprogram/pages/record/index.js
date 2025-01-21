@@ -21,8 +21,8 @@ Page({
     scaleMealId: null,
     lastTapTime: 0,
     heartImages: {
-      outline: '/images/icons/heart-outline.png',
-      filled: '/images/icons/heart-filled.png'
+      outline: 'cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/icons/heart-outline.png',
+      filled: 'cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/icons/heart-filled.png'
     }
   },
 
