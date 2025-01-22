@@ -7,7 +7,7 @@
       <text class="arrow">></text>
     </view>
     <view class="right" bindtap="onSearch">
-      <image class="search-icon" src="/images/icons/search.png" mode="aspectFit"></image>
+      <image class="search-icon" src="cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/icons/search.png" mode="aspectFit"></image>
     </view>
   </view>
 
@@ -87,7 +87,7 @@
 
   <!-- 空状态 -->
   <view class="empty-state" wx:else>
-    <image class="empty-icon" src="/images/icons/empty-message.png" mode="aspectFit"></image>
+    <image class="empty-icon" src="cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/icons/empty-message.png" mode="aspectFit"></image>
     <view class="empty-text">这里什么都没有，快去给Ta写留言吧</view>
     <button class="write-message-btn" bindtap="onWriteMessage">给TA写留言</button>
   </view>

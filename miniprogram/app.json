@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/testlogin/index",
     "pages/home/home",
     "pages/record/index",
     "pages/record/edit/index",

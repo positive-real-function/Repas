@@ -22,15 +22,18 @@ App({
         console.log('云函数调用成功：', res)
         this.globalData.openid = res.result.openid
         console.log('当前用户openid：', res.result.openid)
-        if (!this.globalData.allowedOpenIds.includes(res.result.openid)) {
-          wx.showModal({
-            title: '无权访问',
-            content: '抱歉，您没有权限访问该小程序',
-            showCancel: false,
-            success: () => {
-              wx.exitMiniProgram()
-            }
-          })
+        
+        // 检查是否是 Elie 或 Nora 的 openid
+        if (this.globalData.allowedOpenIds.includes(res.result.openid)) {
+          // 是 Elie 或 Nora，直接进入首页
+          wx.switchTab({
+            url: '/pages/home/home'
+          });
+        } else {
+          // 其他用户跳转到测试登录页面
+          wx.redirectTo({
+            url: '/pages/testlogin/index'
+          });
         }
       },
       fail: err => {

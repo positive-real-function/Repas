@@ -223,10 +223,13 @@ Page({
 
       console.log('保存结果：', result);
 
-      // 保存成功后清空临时图片记录
+      // 保存成功后清空临时图片记录并禁用退出提示
       this.setData({
         tempImagePaths: []
       });
+      
+      // 禁用退出提示
+      wx.disableAlertBeforeUnload();
 
       wx.showToast({
         title: '保存成功',
