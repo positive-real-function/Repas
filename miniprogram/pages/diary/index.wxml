@@ -15,6 +15,12 @@
 
   <!-- 日记列表 -->
   <view class="diary-list">
+    <!-- 空数据提示 -->
+    <view class="empty-state" wx:if="{{!pageLoading && diaryList.length === 0}}">
+      <image class="empty-image" src="cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/icons/empty-diary.png" mode="aspectFit"></image>
+      <text class="empty-text">还没有日记呢，写一篇吧~</text>
+    </view>
+
     <view 
       class="diary-item" 
       wx:for="{{diaryList}}" 

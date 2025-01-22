@@ -4,6 +4,7 @@ App({
     allowedOpenIds: ['oup1z5Dv4pTjk0iZKjg3BT63EH7g', 'oup1z5IWvTgiJitepm5-VMK9ysKw'],
     userInfo: null,
     openid: null,
+    isAdminUser: false,
   },
 
   onLaunch: function () {
@@ -25,12 +26,12 @@ App({
         
         // 检查是否是 Elie 或 Nora 的 openid
         if (this.globalData.allowedOpenIds.includes(res.result.openid)) {
-          // 是 Elie 或 Nora，直接进入首页
+          this.globalData.isAdminUser = true;
           wx.switchTab({
             url: '/pages/home/home'
           });
         } else {
-          // 其他用户跳转到测试登录页面
+          this.globalData.isAdminUser = false;
           wx.redirectTo({
             url: '/pages/testlogin/index'
           });

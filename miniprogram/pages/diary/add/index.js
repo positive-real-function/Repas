@@ -1,4 +1,6 @@
 // pages/diary/edit/index.js
+const { getCollection } = require('../../../config/collections.js');
+
 Page({
 
   /**
@@ -209,7 +211,7 @@ Page({
     this.setData({ pageLoading: true });
     try {
       const db = wx.cloud.database();
-      const res = await db.collection('diaries').doc(this.data.diaryId).get();
+      const res = await db.collection(getCollection('DIARY')).doc(this.data.diaryId).get();
       const diary = res.data;
 
       this.setData({
@@ -253,14 +255,14 @@ Page({
 
       if (this.data.isEdit) {
         // 更新已有日记
-        await db.collection('diaries').doc(this.data.diaryId).update({
+        await db.collection(getCollection('DIARY')).doc(this.data.diaryId).update({
           data: diaryData
         });
       } else {
         // 添加新日记
         diaryData.createTime = db.serverDate();
         diaryData.openid = this.data.openid;
-        await db.collection('diaries').add({
+        await db.collection(getCollection('DIARY')).add({
           data: diaryData
         });
       }
