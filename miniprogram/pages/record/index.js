@@ -1,4 +1,6 @@
 // pages/record/index.js
+const { getCollection } = require('../../config/collections.js');
+
 Page({
   data: {
     currentTab: 'Nora',
@@ -52,10 +54,7 @@ Page({
       const db = wx.cloud.database();
       const _ = db.command;
       
-      const { data } = await db.collection('meal_records')
-        .where({
-          user: this.data.currentTab
-        })
+      const { data } = await db.collection(getCollection('MEAL'))
         .orderBy('createTime', 'desc')
         .get();
       
@@ -66,7 +65,9 @@ Page({
         return;
       }
       
-      const groupedData = this.groupRecordsByDate(data);
+      // 过滤当前标签页对应的用户数据
+      const filteredData = data.filter(record => record.user === this.data.currentTab);
+      const groupedData = this.groupRecordsByDate(filteredData);
       
       this.setData({
         mealRecords: groupedData
@@ -222,7 +223,7 @@ Page({
                 try {
                   const db = wx.cloud.database();
                   // 删除数据库记录
-                  await db.collection('meal_records').doc(meal._id).remove();
+                  await db.collection(getCollection('MEAL')).doc(meal._id).remove();
                   
                   // 删除云存储中的所有图片
                   if (meal.images && meal.images.length > 0) {
@@ -284,7 +285,7 @@ Page({
       const newLikedStatus = !meal.liked;
       
       // 更新数据库
-      await db.collection('meal_records').doc(meal._id).update({
+      await db.collection(getCollection('MEAL')).doc(meal._id).update({
         data: {
           liked: newLikedStatus
         }

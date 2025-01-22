@@ -1,3 +1,5 @@
+const { getCollection } = require('../../../config/collections.js');
+
 Page({
   data: {
     imagePaths: [],
@@ -43,7 +45,7 @@ Page({
 
     try {
       const db = wx.cloud.database();
-      const res = await db.collection('meal_records').doc(this.data.recordId).get();
+      const res = await db.collection(getCollection('MEAL')).doc(this.data.recordId).get();
       const record = res.data;
 
       // 从价格字符串中提取数字部分
@@ -211,12 +213,12 @@ Page({
 
       let result;
       if (this.data.isEdit) {
-        result = await db.collection('meal_records').doc(this.data.recordId).update({
+        result = await db.collection(getCollection('MEAL')).doc(this.data.recordId).update({
           data: recordData
         });
       } else {
         recordData.createTime = db.serverDate();
-        result = await db.collection('meal_records').add({
+        result = await db.collection(getCollection('MEAL')).add({
           data: recordData
         });
       }
