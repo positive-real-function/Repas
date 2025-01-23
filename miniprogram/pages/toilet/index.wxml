@@ -59,7 +59,7 @@
       <view class="stats-title">本周色谱</view>
       <view class="color-list">
         <view class="color-item" wx:for="{{colorStats}}" wx:key="color">
-          <image class="poo-icon" src="/images/toilet/poo_{{item.color}}.png" mode="aspectFit"></image>
+          <image class="poo-icon" src="cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/toilet/poo_{{item.color}}.png" mode="aspectFit"></image>
           <text class="color-name">{{item.name}}</text>
           <text class="color-count">{{item.count}}次</text>
         </view>

@@ -4,7 +4,7 @@
   <view class="header">
     <view class="title">每一迹</view>
     <view class="settings-icon" bindtap="showSettings">
-      <image src="/images/icons/settings.png" mode="aspectFit"></image>
+      <image src="cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/icons/settings.png" mode="aspectFit"></image>
     </view>
   </view>
 
