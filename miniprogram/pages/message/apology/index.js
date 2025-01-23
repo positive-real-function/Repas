@@ -1,6 +1,6 @@
 // pages/message/apology/index.js
 const db = wx.cloud.database()
-const messagesCollection = db.collection('messages')
+const { getCollection } = require('../../../config/collections.js')
 
 Page({
   data: {
@@ -82,7 +82,7 @@ Page({
     wx.showLoading({ title: '发布中' });
     try {
       // 添加留言
-      await messagesCollection.add({
+      await db.collection(getCollection('MESSAGE')).add({
         data: {
           content,
           userId: this.data.userInfo.openId,

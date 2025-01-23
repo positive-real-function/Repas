@@ -1,7 +1,6 @@
 // pages/message/index.js
 const db = wx.cloud.database()
-const messagesCollection = db.collection('messages')
-const repliesCollection = db.collection('replies')  // 添加回复集合
+const { getCollection } = require('../../config/collections.js')
 
 Page({
 
@@ -163,7 +162,7 @@ Page({
       }
 
       // 获取留言数据
-      const res = await messagesCollection
+      const res = await db.collection(getCollection('MESSAGE'))
         .where(query)
         .orderBy('createTime', 'desc')
         .skip((this.data.page - 1) * this.data.pageSize)
@@ -173,7 +172,7 @@ Page({
       // 获取每条留言的回复
       const messages = await Promise.all(res.data.map(async (msg) => {
         // 获取该留言的所有回复
-        const repliesRes = await repliesCollection
+        const repliesRes = await db.collection(getCollection('REPLY'))
           .where({
             messageId: msg._id
           })
@@ -183,10 +182,7 @@ Page({
         return {
           ...msg,
           time: this.formatTime(msg.createTime),
-          replies: repliesRes.data.map(reply => ({
-            ...reply,
-            time: this.formatTime(reply.createTime)
-          }))
+          replies: repliesRes.data
         };
       }));
 
@@ -354,7 +350,7 @@ Page({
 
     wx.showLoading({ title: '搜索中' });
     try {
-      const res = await messagesCollection
+      const res = await db.collection(getCollection('MESSAGE'))
         .where({
           content: db.RegExp({
             regexp: key,
@@ -423,7 +419,7 @@ Page({
             this.setData({ pageLoading: true });
             try {
               // 从云数据库删除
-              await messagesCollection.doc(messageId).remove();
+              await db.collection(getCollection('MESSAGE')).doc(messageId).remove();
               
               // 从本地数据中移除
               const messages = this.data.messages.filter(msg => msg._id !== messageId);
@@ -531,7 +527,7 @@ Page({
     this.setData({ pageLoading: true });
     try {
       // 在replies集合中添加新回复
-      const result = await repliesCollection.add({
+      const result = await db.collection(getCollection('REPLY')).add({
         data: {
           messageId: message._id,
           content: content.trim(),
@@ -586,7 +582,7 @@ Page({
   },
 
   // 点击回复处理
-  onTapReply(e) {
+  async onTapReply(e) {
     const { messageIndex, replyIndex, replyId } = e.currentTarget.dataset;
     console.log('要删除的回复ID:', replyId);
     
@@ -598,7 +594,7 @@ Page({
           this.setData({ pageLoading: true });
           try {
             // 直接从数据库中删除回复
-            await repliesCollection.doc(replyId).remove();
+            await db.collection(getCollection('REPLY')).doc(replyId).remove();
             
             // 先重置页码
             this.setData({ 

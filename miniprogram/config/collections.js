@@ -6,6 +6,7 @@ const Collections = {
     MEAL: 'meal',
     REMIND: 'remind',
     MESSAGE: 'message',
+    REPLY: 'reply',
     SPORTS: 'sports',
     TOILET: 'toilet',
     // 添加其他集合...
@@ -16,6 +17,7 @@ const Collections = {
     MEAL: 'test_meal',
     REMIND: 'test_remind',
     MESSAGE: 'test_message',
+    REPLY: 'test_reply',
     SPORTS: 'test_sports',
     TOILET: 'test_toilet',
     // 添加其他测试集合...
