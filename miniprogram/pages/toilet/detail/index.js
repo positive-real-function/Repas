@@ -1,3 +1,6 @@
+const { getCollection } = require('../../../config/collections.js');
+const db = wx.cloud.database();
+
 Page({
   data: {
     colors: [
@@ -63,9 +66,6 @@ Page({
     wx.showLoading({ title: '保存中...' });
     
     try {
-      const db = wx.cloud.database();
-      
-      // 确保时间和持续时间正确
       const createTime = new Date(this.data.startTime);
       const duration = this.data.duration;
 
@@ -78,7 +78,7 @@ Page({
         user: this.data.user
       });
 
-      const result = await db.collection('toilet_records').add({
+      const result = await db.collection(getCollection('TOILET')).add({
         data: {
           color: this.data.selectedColor,
           state: this.data.selectedState,

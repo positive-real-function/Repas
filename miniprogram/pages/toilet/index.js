@@ -1,4 +1,7 @@
 // pages/toilet/index.js
+const { getCollection } = require('../../config/collections.js');
+const db = wx.cloud.database();
+
 Page({
 
   /**
@@ -118,11 +121,10 @@ Page({
     wx.showLoading({ title: '加载中...' });
     
     try {
-      const db = wx.cloud.database();
       console.log('正在加载所有记录');
       
       // 获取所有记录，不做用户过滤
-      const { data } = await db.collection('toilet_records')
+      const { data } = await db.collection(getCollection('TOILET'))
         .orderBy('createTime', 'desc')
         .get();
 
