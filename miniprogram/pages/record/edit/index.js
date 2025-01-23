@@ -13,7 +13,8 @@ Page({
     currencySymbol: '¥',
     recordId: '',
     isEdit: false,
-    tempImagePaths: []
+    tempImagePaths: [],
+    liked: false
   },
 
   onLoad(options) {
@@ -57,7 +58,8 @@ Page({
         price: priceNumber,
         currencySymbol: record.price.startsWith('¥') ? '¥' : '€',
         imagePaths: record.images || [],
-        currentImageIndex: 0
+        currentImageIndex: 0,
+        liked: record.liked || false
       });
     } catch (err) {
       console.error('加载记录失败：', err);
@@ -208,7 +210,8 @@ Page({
         user: this.data.user,
         avatar: this.data.avatar,
         images: this.data.imagePaths,
-        image: this.data.imagePaths[0]
+        image: this.data.imagePaths[0],
+        liked: this.data.liked
       };
 
       let result;

@@ -584,7 +584,35 @@ Page({
   // 点击回复处理
   async onTapReply(e) {
     const { messageIndex, replyIndex, replyId } = e.currentTarget.dataset;
-    console.log('要删除的回复ID:', replyId);
+    // 先检查数据是否存在
+    if (!this.data.messages || !this.data.messages[messageIndex]) {
+      console.error('留言数据不存在');
+      return;
+    }
+    
+    const message = this.data.messages[messageIndex];
+    
+    // 检查回复数组是否存在
+    if (!message.replies || !message.replies[replyIndex]) {
+      console.error('回复数据不存在');
+      return;
+    }
+    
+    const reply = message.replies[replyIndex];
+    
+    // 检查是否有权限删除
+    const canDelete = this.data.userInfo && (
+      this.data.userInfo.userName === reply.userName ||    // 可以删除自己发布的回复
+      this.data.userInfo.userName === message.userName     // 留言创建者可以删除任何回复
+    );
+    
+    if (!canDelete) {
+      wx.showToast({
+        title: '无权删除此回复',
+        icon: 'none'
+      });
+      return;
+    }
     
     wx.showModal({
       title: '提示',
@@ -596,21 +624,17 @@ Page({
             // 直接从数据库中删除回复
             await db.collection(getCollection('REPLY')).doc(replyId).remove();
             
-            // 先重置页码
-            this.setData({ 
-              page: 1, 
-              reachBottom: false
-            });
-            
-            // 获取新数据
-            await this.getMessageList();
+            // 从本地数据中移除回复
+            const messages = [...this.data.messages];
+            messages[messageIndex].replies = messages[messageIndex].replies.filter(r => r._id !== replyId);
+            this.setData({ messages });
             
             wx.showToast({
               title: '删除成功',
               icon: 'success'
             });
           } catch (err) {
-            console.error('删除回复失败：', err, '回复ID:', replyId);
+            console.error('删除回复失败：', err);
             wx.showToast({
               title: '删除失败',
               icon: 'none'
