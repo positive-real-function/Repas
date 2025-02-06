@@ -12,7 +12,7 @@
           bindtap="selectColor"
           data-color="{{item.value}}"
         >
-          <image src="/images/toilet/poo_{{item.value}}.png" mode="aspectFit"></image>
+          <image src="cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/toilet/poo_{{item.value}}.png" mode="aspectFit"></image>
           <text>{{item.name}}</text>
         </view>
       </view>

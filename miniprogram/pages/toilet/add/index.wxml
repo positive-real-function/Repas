@@ -7,7 +7,7 @@
     <!-- 中间的图片，根据状态切换 -->
     <image 
       class="poo-image" 
-      src="{{isStarted ? '/images/toilet/poo_bg2.png' : '/images/toilet/poo_bg1.png'}}" 
+      src="{{isStarted ? 'cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/toilet/poo_bg2.png' : 'cloud://repas-0gr1x5by6fb1c499.7265-repas-0gr1x5by6fb1c499-1331787762/images/toilet/poo_bg1.png'}}" 
       mode="aspectFit"
     ></image>
     
